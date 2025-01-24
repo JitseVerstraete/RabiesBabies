@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1266479543881229493}
   - component: {fileID: 6743495258015773010}
   - component: {fileID: 7824342329437820815}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sphere (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 2928653592997361897}
   - component: {fileID: 2944882900309732160}
   - component: {fileID: 2840468639084739353}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Baby
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -298,7 +298,7 @@ GameObject:
   - component: {fileID: 5696934275174300774}
   - component: {fileID: 1230123470909639991}
   - component: {fileID: 3625623443531261616}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sphere (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -406,7 +406,7 @@ GameObject:
   - component: {fileID: 3284768898538689866}
   - component: {fileID: 6152615451792343919}
   - component: {fileID: 5188190088107403050}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -514,7 +514,7 @@ GameObject:
   - component: {fileID: 1688957348983554855}
   - component: {fileID: 5030457620929684135}
   - component: {fileID: 6143390592620248773}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sphere (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
