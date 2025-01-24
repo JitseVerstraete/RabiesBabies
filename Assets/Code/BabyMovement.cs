@@ -53,7 +53,7 @@ public class BabyMovement : MonoBehaviour
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		// TODO take layer into account
 		RaycastHit hit;
-		if (Physics.Raycast(ray, out hit)) {
+		if (Physics.Raycast(ray, out hit, 100, LayerMask.NameToLayer(layerName))) {
 			return hit.point;
 		}
 		return Vector3.zero;
@@ -61,6 +61,7 @@ public class BabyMovement : MonoBehaviour
 
 	private void AddPathPoint(Vector3 point)
 	{
+		if (_linePoints.Count > 0 && Vector3.Distance(_linePoints.Last(), point) < .05f) return;
 		_linePoints.Add(point);
 		_lineRenderer.positionCount = _linePoints.Count;
 		_lineRenderer.SetPositions(_linePoints.ToArray());
