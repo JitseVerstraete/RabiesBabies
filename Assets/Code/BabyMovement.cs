@@ -38,10 +38,7 @@ public class BabyMovement : MonoBehaviour
 		// for now, always allow going to PATH state 
 		if (Input.GetMouseButtonDown(0) && IsMouseOverThisBaby() && _state != MovementState.NONE)
 		{
-			_linePoints.Clear();
 			ChangeState(MovementState.PATH);
-			_drawing = true;
-			_pathIndex = 1;
 		}
 		
 		if (_state == MovementState.PATH)
@@ -61,8 +58,22 @@ public class BabyMovement : MonoBehaviour
 
 	public void ChangeState(MovementState newState)
 	{
-		_state = newState;
 		Debug.Log($"NEW STATE {newState}");
+
+		// cleanup
+		if (_state == MovementState.PATH)
+		{
+			_lineRenderer.positionCount = 0;
+		}
+		
+		if (newState == MovementState.PATH)
+		{
+			_linePoints.Clear();
+			_drawing = true;
+			_pathIndex = 1;
+		}
+		
+		_state = newState;
 	}
 
 	private Vector3 GetMouseWorldPosition(string layerName)
@@ -120,8 +131,27 @@ public class BabyMovement : MonoBehaviour
 
 		transform.position = Vector3.Lerp(_linePoints[_pathIndex-1], _linePoints[_pathIndex], _moveT / totalSegmentTime);
 
-		if (Mathf.Approximately(Vector3.Distance(_linePoints[_pathIndex], transform.position), 0)) return;
+		UpdateLineSegments();
+		
+		if (Mathf.Approximately(Vector3.Distance(_linePoints[_pathIndex], transform.position), 0))
+		{
+			return;
+		}
 		transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(_linePoints[_pathIndex] - _linePoints[_pathIndex-1]), 10f * Time.deltaTime);
+	}
+
+	private void UpdateLineSegments()
+	{
+		List<Vector3> points = new List<Vector3>(_linePoints);
+		points.RemoveRange(0, _pathIndex);
+		points.Reverse();
+		_lineRenderer.positionCount = points.Count;
+		_lineRenderer.SetPositions(points.ToArray());
+		
+		float totalLength = points.Zip(points.Skip(1), (first, second) => Vector3.Distance(first, second)).Sum();
+		
+		_lineRenderer.material.mainTextureScale = totalLength * Vector3.one;
+		_lineRenderer.material.mainTextureOffset += Vector2.one * Time.deltaTime;
 	}
 
 	private void MoveFreely()
