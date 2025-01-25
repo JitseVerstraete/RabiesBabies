@@ -625,6 +625,8 @@ MonoBehaviour:
   _hungerIcon: {fileID: 21300000, guid: afdd4562b7b6843f082ff5b8ec18e4cd, type: 3}
   _boredIcon: {fileID: 21300000, guid: 7e63e35a5df0e457cb9152d927d1a19e, type: 3}
   _diaperIcon: {fileID: 21300000, guid: eec6787619c934c28826d438105d118d, type: 3}
+  _pathLineRenderer: {fileID: 2944882900309732160}
+  _skinnedRenderer: {fileID: 6005051901570712607}
 --- !u!114 &2928653592997361897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -649,9 +651,9 @@ LineRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6055451703256728989}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 0
   m_StaticShadowCaster: 0
   m_MotionVectors: 0
   m_LightProbeUsage: 0
@@ -1200,6 +1202,11 @@ PrefabInstance:
 --- !u!4 &1096300252018943577 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e5fdc168e621f498cb49a13e17327f62, type: 3}
+  m_PrefabInstance: {fileID: 629499235502375346}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &6005051901570712607 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -2600172534127671891, guid: e5fdc168e621f498cb49a13e17327f62, type: 3}
   m_PrefabInstance: {fileID: 629499235502375346}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &8071306592061796404 stripped

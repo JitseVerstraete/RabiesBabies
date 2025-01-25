@@ -31,6 +31,8 @@ public class BabyBehavior : MonoBehaviour
     [SerializeField] private Sprite _hungerIcon;
     [SerializeField] private Sprite _boredIcon;
     [SerializeField] private Sprite _diaperIcon;
+    [SerializeField] private LineRenderer _pathLineRenderer;
+    [SerializeField] private SkinnedMeshRenderer _skinnedRenderer;
     
     private BabyState _currentState;
     private BabyNeed _currentNeed;
@@ -47,7 +49,7 @@ public class BabyBehavior : MonoBehaviour
         _movement = GetComponent<BabyMovement>();
     }
 
-    public void Init()
+    public void Init(Color color)
     {
         ChangeState(BabyState.Neutral);
         SetNeed(GetRandomNeed());
@@ -61,6 +63,8 @@ public class BabyBehavior : MonoBehaviour
         InitializeDangerCircle();
         _dangerRadiusLine.gameObject.SetActive(false);
 
+        _pathLineRenderer.material.color = color;
+        _skinnedRenderer.materials[1].color = color;
     }
 
     private void Update()

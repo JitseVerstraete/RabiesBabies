@@ -9,11 +9,13 @@ public class BabySpawner : MonoBehaviour
     [SerializeField] private GameObject _objectToSpawn;        
     [SerializeField] private List<Transform> spawnPoints;      
     [SerializeField] private float spawnInterval = 2.0f;       
-    [SerializeField] private int maxObjects = 10;              
+    [SerializeField] private int maxObjects = 10;
+    [SerializeField] private List<Color> colors;              
     
     private bool _canSpawn = false;
     
     private List<GameObject> _spawnedBabys = new List<GameObject>();
+    private int _babyCounter = 0;
 
     private void Start()
     {
@@ -59,7 +61,7 @@ public class BabySpawner : MonoBehaviour
         
         GameObject spawnedObject = Instantiate(_objectToSpawn, spawnPoint.position, spawnPoint.rotation);
         BabyBehavior behavior = spawnedObject.GetComponent<BabyBehavior>();
-        behavior.Init();
+        behavior.Init(colors[_babyCounter++ % colors.Count]);
         _spawnedBabys.Add(spawnedObject);
     }
 
