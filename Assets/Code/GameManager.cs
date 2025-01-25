@@ -19,6 +19,7 @@ public class GameManager: MonoBehaviour
     private GameState _currentState;
     [SerializeField] private TMP_Text _timerText;
     [SerializeField] private TMP_Text _endText;
+    [SerializeField] private BackgroundMusicController _backgroundMusicController;
     
     [SerializeField] private float _gameEndDuration = 5f;
     public GameObject mainMenu;
@@ -89,16 +90,20 @@ public class GameManager: MonoBehaviour
         pauseMenu.SetActive(newState == GameState.PauseMenu);
         gameOverMenu.SetActive(newState == GameState.EndGame);
         
+        _backgroundMusicController.UnPauseMusic();
+        
         switch (newState)
         {
             case GameState.MainMenu:
                 Debug.Log("Main Menu");
                 gameTime = 0f;
+                _backgroundMusicController.ResetSpeed();
                 babySpawner.ResetSpawner();
                 break;
             case GameState.PauseMenu:
                 Debug.Log("Pause Menu");
                 babySpawner.SetCanSpawn(false);
+                _backgroundMusicController.PauseMusic();
                 break;
             case GameState.Playing:
                 Debug.Log("Playing Game");

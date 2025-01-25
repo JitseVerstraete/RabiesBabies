@@ -912,6 +912,10 @@ PrefabInstance:
       propertyPath: _gameEndDuration
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2410821905452090061, guid: 9692d3b0656a1444c9b1a964922a445e, type: 3}
+      propertyPath: _backgroundMusicController
+      value: 
+      objectReference: {fileID: 1245208155}
     - target: {fileID: 5205640864868212628, guid: 9692d3b0656a1444c9b1a964922a445e, type: 3}
       propertyPath: m_Name
       value: GameManager

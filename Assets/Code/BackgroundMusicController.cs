@@ -6,7 +6,7 @@ public class BackgroundMusicController : MonoBehaviour
     public AudioSource audioSource;
 
     private readonly float _speedUpRate = 0.01f;
-    private readonly float _maxPitch = 3.0f;
+    private readonly float _maxPitch = 1.5f;
 
     void Start()
     {
