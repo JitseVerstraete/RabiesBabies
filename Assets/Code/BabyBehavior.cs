@@ -23,6 +23,7 @@ public class BabyBehavior : MonoBehaviour
     [SerializeField] private float _needMetDuration = 10f;
     [SerializeField] private float _fightRadius = 2f;
     [SerializeField] private LineRenderer _dangerRadiusLine = null;
+    [SerializeField] private SphereCollider _dangerRadiusCollider = null;
 
     [Space(5)] 
     [SerializeField] private GameObject _needIconParent;
@@ -58,7 +59,9 @@ public class BabyBehavior : MonoBehaviour
         transform.position = hit.point;
 
         InitializeDangerCircle();
-        _dangerRadiusLine.enabled = false;
+        _dangerRadiusLine.gameObject.SetActive(false);
+
+        _dangerRadiusCollider.radius = _fightRadius;
     }
 
     private void Update()
@@ -125,7 +128,7 @@ public class BabyBehavior : MonoBehaviour
                 break;
             case BabyState.Rabid:
                 Debug.Log("changed to rabid!");
-                _dangerRadiusLine.enabled = true;
+                _dangerRadiusLine.gameObject.SetActive(true);
                 break;
             case BabyState.NeedMet:
                 Debug.Log("changed to needs met!");
@@ -193,8 +196,8 @@ public class BabyBehavior : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        GameObject otherObject = other.attachedRigidbody.gameObject;
-        if (otherObject.CompareTag("NeedStation"))
+        GameObject otherObject = other .attachedRigidbody?.gameObject;
+        if (otherObject &&  otherObject.CompareTag("NeedStation"))
         {
             NeedStation collidedStation = otherObject.GetComponent<NeedStation>();
             if (collidedStation.need == _currentNeed)
@@ -204,6 +207,16 @@ public class BabyBehavior : MonoBehaviour
                 transform.position = collidedStation.babyHoldPoint.position;
             }
         }
+        
+        if (IsInLayerMask(other.gameObject, LayerMask.GetMask("DangerRadius")))
+        {
+            Debug.Log("entered other baby fight circle");
+        }
+    }
+    
+    private bool IsInLayerMask(GameObject obj, LayerMask layerMask)
+    {
+        return ((1 << obj.layer) & layerMask) != 0;
     }
     
 }

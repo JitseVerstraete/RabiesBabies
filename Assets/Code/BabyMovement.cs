@@ -99,7 +99,7 @@ public class BabyMovement : MonoBehaviour
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		RaycastHit hit;
 		if (Physics.Raycast(ray, out hit, 100, 1 << LayerMask.NameToLayer("Baby"))) {
-			return hit.collider.gameObject == gameObject;
+			return hit.rigidbody.gameObject == gameObject;
 		}
 		return false;
 	}

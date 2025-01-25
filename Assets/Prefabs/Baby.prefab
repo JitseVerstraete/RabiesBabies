@@ -74,6 +74,59 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _offset: {x: 0.8, y: 0.8}
+--- !u!1 &1829704152661595078
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4798116686236716929}
+  - component: {fileID: 4011473179644803622}
+  m_Layer: 6
+  m_Name: SolidCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4798116686236716929
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1829704152661595078}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.498, z: 0.032}
+  m_LocalScale: {x: 1.1437281, y: 1.1437281, z: 1.1437281}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8333601546121554617}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &4011473179644803622
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1829704152661595078}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.59
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4261750541881074266
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,7 +299,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3235784002990283307}
   - component: {fileID: 4490940819712677683}
-  m_Layer: 6
+  - component: {fileID: 7826892906896458439}
+  m_Layer: 9
   m_Name: DangerCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -377,6 +431,27 @@ LineRenderer:
   m_UseWorldSpace: 0
   m_Loop: 1
   m_ApplyActiveColorSpace: 1
+--- !u!135 &7826892906896458439
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4716544490961620988}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4911192102226544540
 GameObject:
   m_ObjectHideFlags: 0
@@ -499,7 +574,7 @@ GameObject:
   - component: {fileID: 5398485412369793071}
   - component: {fileID: 2928653592997361897}
   - component: {fileID: 2944882900309732160}
-  - component: {fileID: 2840468639084739353}
+  - component: {fileID: 38372870482891278}
   m_Layer: 6
   m_Name: Baby
   m_TagString: Untagged
@@ -523,6 +598,7 @@ Transform:
   - {fileID: 3295259253707398531}
   - {fileID: 4269193667749619050}
   - {fileID: 3235784002990283307}
+  - {fileID: 4798116686236716929}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5398485412369793071
@@ -541,6 +617,7 @@ MonoBehaviour:
   _needMetDuration: 10
   _fightRadius: 2
   _dangerRadiusLine: {fileID: 4490940819712677683}
+  _dangerRadiusCollider: {fileID: 7826892906896458439}
   _needIconParent: {fileID: 1380856795338766769}
   _needIconRef: {fileID: 1862415536633998604}
   _hungerIcon: {fileID: 21300000, guid: afdd4562b7b6843f082ff5b8ec18e4cd, type: 3}
@@ -668,27 +745,33 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!135 &2840468639084739353
-SphereCollider:
+--- !u!54 &38372870482891278
+Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6055451703256728989}
-  m_Material: {fileID: 0}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &7025247734544660509
 GameObject:
   m_ObjectHideFlags: 0
