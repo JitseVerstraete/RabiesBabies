@@ -53,6 +53,8 @@ public class BabyMovement : MonoBehaviour
 			}
 			else if (Input.GetMouseButtonUp(0)) 
 				_drawing = false;
+			else if (_linePoints.Count <= 1)
+				ChangeState(MovementState.FREE);
 
 			MoveOnPath();
 		}
@@ -64,7 +66,7 @@ public class BabyMovement : MonoBehaviour
 
 	public void ChangeState(MovementState newState)
 	{
-		Debug.Log($"NEW STATE {newState}");
+		Debug.Log($"New movement state: {newState}");
 
 		// cleanup
 		if (_state == MovementState.PATH)
@@ -156,7 +158,7 @@ public class BabyMovement : MonoBehaviour
 		
 		float totalLength = points.Zip(points.Skip(1), (first, second) => Vector3.Distance(first, second)).Sum();
 		
-		_lineRenderer.material.mainTextureScale = totalLength * Vector3.one;
+		_lineRenderer.material.mainTextureScale = totalLength * Vector3.right;
 		_lineRenderer.material.mainTextureOffset += Vector2.one * Time.deltaTime;
 	}
 
