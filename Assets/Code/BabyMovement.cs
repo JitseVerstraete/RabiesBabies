@@ -136,8 +136,9 @@ public class BabyMovement : MonoBehaviour
 		float totalSegmentTime = segmentDistance / _speed; 
 		
 		_moveT += Time.deltaTime;
-
+		
 		transform.position = Vector3.Lerp(_linePoints[_pathIndex-1], _linePoints[_pathIndex], _moveT / totalSegmentTime);
+		// transform.Translate(Vector3.down * .05f);
 
 		UpdateLineSegments();
 		
@@ -158,7 +159,7 @@ public class BabyMovement : MonoBehaviour
 		
 		float totalLength = points.Zip(points.Skip(1), (first, second) => Vector3.Distance(first, second)).Sum();
 		
-		_lineRenderer.material.mainTextureScale = totalLength * Vector3.right;
+		// _lineRenderer.material.mainTextureScale = totalLength * Vector3.right;
 		_lineRenderer.material.mainTextureOffset += Vector2.one * Time.deltaTime;
 	}
 
