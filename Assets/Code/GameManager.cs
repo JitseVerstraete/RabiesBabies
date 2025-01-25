@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,7 +18,7 @@ public class GameManager: MonoBehaviour
     public static GameManager instance { get { return _instance; } }
     private GameState _currentState;
     [SerializeField] private TMP_Text _timerText;
-    
+    [SerializeField] private float _gameEndDuration = 5f;
     public GameObject mainMenu;
     public GameObject pauseMenu;
     public GameObject gameOverMenu;
@@ -103,7 +104,7 @@ public class GameManager: MonoBehaviour
                 break;
             case GameState.Ending:
                 Debug.Log("Ending Game");
-                ChangeState(GameState.EndGame);
+                StartCoroutine(WaitThenEndGame());
                 break;
             case GameState.EndGame:
                 Debug.Log("End Game");
@@ -112,4 +113,11 @@ public class GameManager: MonoBehaviour
         }
         _currentState = newState;
     }
+
+    private IEnumerator WaitThenEndGame()
+    {
+        yield return new WaitForSeconds(_gameEndDuration);
+        ChangeState(GameState.EndGame);
+    }
+    
 }
