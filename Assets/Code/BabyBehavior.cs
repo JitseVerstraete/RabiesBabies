@@ -119,6 +119,7 @@ public class BabyBehavior : MonoBehaviour
                 // disable foams and reset blendshape
                 _foamParticles.ForEach(go => go.SetActive(false));
                 _skinnedRenderer.SetBlendShapeWeight(0, 0);
+                _skinnedRenderer.materials[3].SetColor("_Emission", Color.white);
                 break;
             case BabyState.NeedMet:
                 transform.position = _attachedStation.babyDropPoint.position;
@@ -146,6 +147,7 @@ public class BabyBehavior : MonoBehaviour
                 _dangerRadiusLine.gameObject.SetActive(true);
                 _foamParticles.ForEach(go => go.SetActive(true));
                 _skinnedRenderer.SetBlendShapeWeight(0, 100);
+                _skinnedRenderer.materials[3].SetColor("_Emission", Color.red);
                 break;
             case BabyState.NeedMet:
                 Debug.Log("changed to needs met!");
