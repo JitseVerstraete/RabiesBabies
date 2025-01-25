@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,6 +22,7 @@ public class BabyBehavior : MonoBehaviour
     [SerializeField] private float _gracePeriod = 5f;
     [SerializeField] private float _needMetDuration = 10f;
     [SerializeField] private float _fightRadius = 2f;
+    [SerializeField] private LineRenderer _dangerRadiusLine = null;
 
     [Space(5)] 
     [SerializeField] private GameObject _needIconParent;
@@ -28,7 +30,7 @@ public class BabyBehavior : MonoBehaviour
     [SerializeField] private Sprite _hungerIcon;
     [SerializeField] private Sprite _boredIcon;
     [SerializeField] private Sprite _diaperIcon;
-
+    
     private BabyState _currentState;
     private BabyNeed _currentNeed;
     private float _rabidTimer = 0f;
@@ -54,6 +56,9 @@ public class BabyBehavior : MonoBehaviour
 
         Physics.Raycast(transform.position + new Vector3(0f, 100f, 0f), Vector3.down, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Floor"));
         transform.position = hit.point;
+
+        InitializeDangerCircle();
+        _dangerRadiusLine.enabled = false;
     }
 
     private void Update()
@@ -120,6 +125,7 @@ public class BabyBehavior : MonoBehaviour
                 break;
             case BabyState.Rabid:
                 Debug.Log("changed to rabid!");
+                _dangerRadiusLine.enabled = true;
                 break;
             case BabyState.NeedMet:
                 Debug.Log("changed to needs met!");
@@ -171,6 +177,19 @@ public class BabyBehavior : MonoBehaviour
         return newNeed;
     }
 
+    private void InitializeDangerCircle()
+    {
+        List<Vector3> positions = new List<Vector3>();
+        int nrPoints = 20;
+        for (int i = 0; i < nrPoints; i++)
+        {
+            float angle = ((i + 1f) / nrPoints) * 2f * Mathf.PI;
+            positions.Add(new Vector3(_fightRadius * Mathf.Cos(angle), 0f, _fightRadius * Mathf.Sin(angle)));
+        }
+        _dangerRadiusLine.positionCount = nrPoints;
+        _dangerRadiusLine.SetPositions(positions.ToArray());
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -187,17 +206,4 @@ public class BabyBehavior : MonoBehaviour
         }
     }
     
-    private void OnDrawGizmos()
-    {
-        if (_currentState == BabyState.Rabid)
-        {
-            Gizmos.color = Color.red;
-        }
-        else if(_currentState == BabyState.Neutral)
-        {
-            Gizmos.color = Color.green;
-        }
-
-        Gizmos.DrawWireSphere(transform.position, _fightRadius);
-    }
 }
