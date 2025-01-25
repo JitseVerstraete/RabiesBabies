@@ -32,6 +32,11 @@ public class GameManager: MonoBehaviour
     
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ChangeState(GameState.PauseMenu);
+        }
+        
         switch (_currentState)
         {
             case GameState.MainMenu:
@@ -56,8 +61,8 @@ public class GameManager: MonoBehaviour
 
         mainMenu.SetActive(newState == GameState.MainMenu);
         timerUI.SetActive(newState == GameState.Playing);
-        //pauseMenu.SetActive(newState == GameState.Playing);
-        //gameOverMenu.SetActive(newState == GameState.EndGame);
+        pauseMenu.SetActive(newState == GameState.PauseMenu);
+        gameOverMenu.SetActive(newState == GameState.EndGame);
         
         switch (newState)
         {
