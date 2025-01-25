@@ -101,6 +101,7 @@ public class GameManager: MonoBehaviour
                 gameTime = 0f;
                 _backgroundMusicController.ResetSpeed();
                 babySpawner.ResetSpawner();
+                DestroyAllObjectsSafely(GameObject.FindGameObjectsWithTag("FightCloud"));
                 break;
             case GameState.PauseMenu:
                 Debug.Log("Pause Menu");
@@ -124,6 +125,19 @@ public class GameManager: MonoBehaviour
         }
         _currentState = newState;
     }
+    
+    private void DestroyAllObjectsSafely(GameObject[] objects)
+    {
+        for (int i = objects.Length - 1; i >= 0; i--)
+        {
+            if (objects[i] != null)
+            {
+                Destroy(objects[i]); // Mark the object for destruction
+                objects[i] = null;   // Clear the reference to avoid access violations
+            }
+        }
+    }
+
 
     private IEnumerator WaitThenEndGame()
     {

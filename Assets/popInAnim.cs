@@ -32,7 +32,6 @@ public class popInAnim : MonoBehaviour
         {
             _timer += Time.deltaTime;
             float currentScale = Mathf.Lerp(_minScale, _maxScale, _scaleCurve.Evaluate(_timer / _duration));
-            Debug.Log(currentScale);
             transform.localScale = new Vector3(currentScale, currentScale, currentScale);
             yield return null;
         }
