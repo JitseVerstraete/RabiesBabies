@@ -98,11 +98,9 @@ public class BabyBehavior : MonoBehaviour
 
                 if (_gracePeriod - _rabidTimer <= _rabidWarningTime)
                 {
-                    Debug.LogWarning("switching ot rabidWarning");
                     ChangeState(BabyState.RabidWarning);
                 }
-
-
+                
                 break;
             case BabyState.RabidWarning:
                 _rabidTimer += Time.deltaTime;
@@ -142,7 +140,6 @@ public class BabyBehavior : MonoBehaviour
                 break;
             case BabyState.NeedMet:
                 _needMetTimer += Time.deltaTime;
-                transform.rotation = Quaternion.Euler(0f, 360f * _needMetTimer / _needMetDuration, 0f);
 
                 if (_needMetTimer >= _needMetDuration)
                 {
@@ -160,7 +157,6 @@ public class BabyBehavior : MonoBehaviour
 
     private IEnumerator PulsingWarning()
     {
-        Debug.LogWarning("pulsing warning");
         _dangerRadiusLine.gameObject.SetActive(true);
 
         float alpha = 0;
@@ -174,7 +170,6 @@ public class BabyBehavior : MonoBehaviour
         bool reverse = false;
         while (_currentState != BabyState.Rabid)
         {
-            Debug.Log(alpha);
             
             if (alpha > 1)
             {
@@ -191,8 +186,7 @@ public class BabyBehavior : MonoBehaviour
 
             yield return null;
         }
-
-        Debug.LogWarning("exit pulsing");
+        
         material.color = new Color( material.color.r, material.color.g, material.color.b, 1);
     }
 
@@ -215,8 +209,8 @@ public class BabyBehavior : MonoBehaviour
                 _skinnedRenderer.materials[3].SetColor("_Emission", Color.white);
                 break;
             case BabyState.NeedMet:
-                transform.position = _attachedStation.babyDropPoint.position;
                 transform.rotation = Quaternion.identity;
+                _attachedStation.RemoveBaby(this);
                 _attachedStation = null;
                 _movement.ChangeState(BabyMovement.MovementState.FREE);
                 _needIconParent.SetActive(true);
@@ -317,17 +311,17 @@ public class BabyBehavior : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         GameObject otherObject = other.attachedRigidbody?.gameObject;
-        if (otherObject && otherObject.CompareTag("NeedStation"))
+        if (otherObject && otherObject.CompareTag("NeedStation") && _currentState != BabyState.NeedMet)
         {
             NeedStation collidedStation = otherObject.GetComponent<NeedStation>();
-            if (collidedStation.need == _currentNeed)
+            if (collidedStation.need == _currentNeed && collidedStation.hasRoom)
             {
+                collidedStation.AddBaby(this);
                 ChangeState(BabyState.NeedMet);
                 _attachedStation = collidedStation;
-                transform.position = collidedStation.babyHoldPoint.position;
             }
         }
     }
