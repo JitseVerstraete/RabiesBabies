@@ -6,6 +6,7 @@ TagManager:
   tags:
   - NeedStation
   - Baby
+  - FightCloud
   layers:
   - Default
   - TransparentFX

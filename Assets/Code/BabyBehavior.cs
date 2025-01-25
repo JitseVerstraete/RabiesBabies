@@ -8,7 +8,8 @@ public enum BabyState
 {
     Neutral,
     Rabid,
-    NeedMet
+    NeedMet,
+    Fighting
 }
 
 public enum BabyNeed
@@ -23,6 +24,7 @@ public class BabyBehavior : MonoBehaviour
     [SerializeField] private float _gracePeriod = 5f;
     [SerializeField] private float _needMetDuration = 10f;
     [SerializeField] private float _fightRadius = 2f;
+    [SerializeField] private float _fightMargin = 0.5f;
     [SerializeField] private LineRenderer _dangerRadiusLine = null;
     [SerializeField] private SphereCollider _dangerRadiusCollider = null;
 
@@ -96,6 +98,30 @@ public class BabyBehavior : MonoBehaviour
             case BabyState.Rabid:
                 //check radius for other babies
                 //check if close to the required NeedStation
+
+                float closestDistance = float.MaxValue;
+                BabyBehavior closestBaby = null;
+                List<BabyBehavior> allBabies = BabySpawner.instance.spawnedBabys;
+                foreach (BabyBehavior baby in allBabies)
+                {
+                    if (baby == this) continue;
+                    if (baby._currentState == BabyState.NeedMet) continue;
+                    
+                    float distance = Vector3.Distance(transform.position, baby.transform.position);
+                    if (distance < _fightRadius + _fightMargin && distance < closestDistance)
+                    {
+                        closestDistance = distance;
+                        closestBaby = baby;
+                    }
+                }
+
+                if (closestBaby != null)
+                {
+                    ChangeState(BabyState.Fighting);
+                    GameManager.instance.SetGameEndCondition();
+                    StartCoroutine(BabyBrawlRoutine(closestBaby));
+                }
+                
                 break;
             case BabyState.NeedMet:
                 _needMetTimer += Time.deltaTime;
@@ -106,6 +132,9 @@ public class BabyBehavior : MonoBehaviour
                     ChangeState(BabyState.Neutral);
                 }
 
+                break;
+            case BabyState.Fighting:
+                
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -133,10 +162,12 @@ public class BabyBehavior : MonoBehaviour
                 transform.rotation = Quaternion.identity;
                 _attachedStation = null;
                 _movement.ChangeState(BabyMovement.MovementState.FREE);
-                _dangerRadiusLine.gameObject.SetActive(false);
                 _needIconParent.SetActive(true);
                 
                 SetNeed(GetRandomNeed(_currentNeed));
+                break;
+            case BabyState.Fighting:
+                
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -160,8 +191,11 @@ public class BabyBehavior : MonoBehaviour
                 Debug.Log("changed to needs met!");
                 _movement.ChangeState(BabyMovement.MovementState.NONE);
                 _needIconParent.SetActive(false);
+                _dangerRadiusLine.gameObject.SetActive(false);
                 _rabidTimer = 0f;
                 _needMetTimer = 0f;
+                break;
+            case BabyState.Fighting:
                 break;
         }
 
@@ -234,12 +268,6 @@ public class BabyBehavior : MonoBehaviour
                 _attachedStation = collidedStation;
                 transform.position = collidedStation.babyHoldPoint.position;
             }
-        }
-        
-        if (other.CompareTag("Baby"))
-        {
-            GameManager.instance.SetGameEndCondition();
-            StartCoroutine(BabyBrawlRoutine(otherObject?.GetComponent<BabyBehavior>()));
         }
     }
 
