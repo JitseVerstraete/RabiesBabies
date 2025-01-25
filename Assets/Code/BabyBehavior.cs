@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -36,6 +35,8 @@ public class BabyBehavior : MonoBehaviour
     [SerializeField] private LineRenderer _pathLineRenderer;
     [SerializeField] private SkinnedMeshRenderer _skinnedRenderer;
     [SerializeField] private List<GameObject> _foamParticles;
+    [SerializeField] private GameObject _faceCamPrefab;
+    [SerializeField] private GameObject _faceCamParent;
     
     private BabyState _currentState;
     private BabyNeed _currentNeed;
@@ -72,6 +73,12 @@ public class BabyBehavior : MonoBehaviour
 
         _pathLineRenderer.material.color = color;
         _skinnedRenderer.materials[1].color = color;
+        
+        GameObject faceCamView = Instantiate(_faceCamPrefab, FindFirstObjectByType<VerticalLayoutGroup>().transform);
+        RawImage rawImage = faceCamView.GetComponentInChildren<RawImage>();
+        RenderTexture renderTexture = new RenderTexture(rawImage.texture.width, rawImage.texture.height, 24);
+        rawImage.texture = renderTexture;
+        GetComponentInChildren<Camera>().targetTexture = renderTexture;
     }
 
     private void Update()

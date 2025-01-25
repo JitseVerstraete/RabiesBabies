@@ -8,7 +8,7 @@ public class Billboard : MonoBehaviour
 
     private void Awake()
     {
-        _mainCamera = FindAnyObjectByType<Camera>();
+        _mainCamera = Camera.main;
     }
 
     private void Update()
