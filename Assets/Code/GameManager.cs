@@ -1,5 +1,6 @@
-using System;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum GameState
 {
@@ -13,6 +14,7 @@ public class GameManager: MonoBehaviour
 {
     private static GameManager _instance;
     private GameState _currentState;
+    [SerializeField] private TMP_Text _timerText;
     
     public GameObject mainMenu;
     public GameObject pauseMenu;
@@ -21,10 +23,11 @@ public class GameManager: MonoBehaviour
     
     public float gameTime { get; set; }
 
-    public void Awake()
+    public void Start()
     {
         _instance = this;
         _currentState = GameState.MainMenu;
+        mainMenu.SetActive(true);
     }
     
     private void Update()
@@ -37,6 +40,10 @@ public class GameManager: MonoBehaviour
                 break;
             case GameState.Playing:
                 gameTime += Time.deltaTime;
+                var minutes = Mathf.FloorToInt(gameTime / 60);
+                var seconds = Mathf.FloorToInt(gameTime % 60);
+                
+                _timerText.text = $"{minutes:00}:{seconds:00}";
                 break;
             case GameState.EndGame:
                 break;
@@ -47,6 +54,11 @@ public class GameManager: MonoBehaviour
     {
         if (_currentState == newState) return;
 
+        mainMenu.SetActive(newState == GameState.MainMenu);
+        timerUI.SetActive(newState == GameState.Playing);
+        //pauseMenu.SetActive(newState == GameState.Playing);
+        //gameOverMenu.SetActive(newState == GameState.EndGame);
+        
         switch (newState)
         {
             case GameState.MainMenu:
