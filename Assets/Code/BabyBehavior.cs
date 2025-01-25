@@ -1,9 +1,6 @@
 using System;
-using System.Threading;
-using Unity.VisualScripting;
-using UnityEditor;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum BabyState
 {
@@ -25,6 +22,12 @@ public class BabyBehavior : MonoBehaviour
     [SerializeField] private float _needMetDuration = 10f;
     [SerializeField] private float _fightRadius = 2f;
 
+    [Space(5)] 
+    [SerializeField] private Image _needIconRef;
+    [SerializeField] private Sprite _hungerIcon;
+    [SerializeField] private Sprite _boredIcon;
+    [SerializeField] private Sprite _diaperIcon;
+
     private BabyState _currentState;
     private BabyNeed _currentNeed;
     private float _rabidTimer = 0f;
@@ -43,8 +46,7 @@ public class BabyBehavior : MonoBehaviour
     public void Init()
     {
         ChangeState(BabyState.Neutral);
-        var enumValues = Enum.GetValues(typeof(BabyNeed));
-        _currentNeed = (BabyNeed)enumValues.GetValue(UnityEngine.Random.Range(0, enumValues.Length));
+        SetNeed(GetRandomNeed());
         _rabidTimer = 0f;
 
         Debug.Log("Baby need " + _currentNeed.ToString());
@@ -71,15 +73,10 @@ public class BabyBehavior : MonoBehaviour
                 break;
             case BabyState.NeedMet:
                 _needMetTimer += Time.deltaTime;
-                
                 transform.rotation = Quaternion.Euler(0f, 360f * _needMetTimer / _needMetDuration, 0f);
                 
                 if (_needMetTimer >= _needMetDuration)
                 {
-                    transform.position = _attachedStation.babyDropPoint.position;
-                    transform.rotation = Quaternion.identity;
-                    _attachedStation = null;
-                    _movement.ChangeState(BabyMovement.MovementState.FREE);
                     ChangeState(BabyState.Neutral);
                 }
 
@@ -93,8 +90,27 @@ public class BabyBehavior : MonoBehaviour
     {
         if (_currentState == newState)
             return;
+        
+        //exit from state stuff
+        switch (_currentState)
+        {
+            case BabyState.Neutral:
+                break;
+            case BabyState.Rabid:
+                break;
+            case BabyState.NeedMet:
+                transform.position = _attachedStation.babyDropPoint.position;
+                transform.rotation = Quaternion.identity;
+                _attachedStation = null;
+                _movement.ChangeState(BabyMovement.MovementState.FREE);
+                SetNeed(GetRandomNeed(_currentNeed));
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+        
 
-        //change visuals here
+        //go to state stuff
         switch (newState)
         {
             case BabyState.Neutral:
@@ -112,6 +128,44 @@ public class BabyBehavior : MonoBehaviour
         }
 
         _currentState = newState;
+    }
+
+    private void SetNeed(BabyNeed need)
+    {
+        _currentNeed = need;
+        switch (_currentNeed)
+        {
+            case BabyNeed.Hungry:
+                _needIconRef.sprite = _hungerIcon;
+                break;
+            case BabyNeed.Bored:
+                _needIconRef.sprite = _boredIcon;
+                break;
+            case BabyNeed.Diaper:
+                _needIconRef.sprite = _diaperIcon;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+    }
+
+    private BabyNeed GetRandomNeed(BabyNeed exclude)
+    {
+        BabyNeed newNeed;
+        do
+        {
+            newNeed = GetRandomNeed();
+        } while (exclude == newNeed);
+
+        return newNeed;
+    }
+    
+    private BabyNeed GetRandomNeed()
+    {
+        var enumValues = Enum.GetValues(typeof(BabyNeed));
+        BabyNeed newNeed = (BabyNeed)enumValues.GetValue(UnityEngine.Random.Range(0, enumValues.Length));
+
+        return newNeed;
     }
 
 
