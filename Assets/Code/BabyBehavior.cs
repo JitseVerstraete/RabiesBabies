@@ -40,8 +40,7 @@ public class BabyBehavior : MonoBehaviour
     [SerializeField] private LineRenderer _pathLineRenderer;
     [SerializeField] private SkinnedMeshRenderer _skinnedRenderer;
     [SerializeField] private List<GameObject> _foamParticles;
-    [SerializeField] private GameObject _faceCamPrefab;
-    [SerializeField] private GameObject _faceCamParent;
+    [SerializeField] private Animator _animator;
 
     private BabyState _currentState;
     private BabyNeed _currentNeed;
@@ -216,6 +215,7 @@ public class BabyBehavior : MonoBehaviour
                 _skinnedRenderer.materials[3].SetColor("_Emission", Color.white);
                 break;
             case BabyState.NeedMet:
+                _animator.SetTrigger("crawl");
                 transform.rotation = Quaternion.identity;
                 _attachedStation.RemoveBaby(this);
                 _attachedStation = null;
@@ -226,7 +226,6 @@ public class BabyBehavior : MonoBehaviour
                 SetNeed(GetRandomNeed(_currentNeed));
                 break;
             case BabyState.Fighting:
-
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -251,6 +250,7 @@ public class BabyBehavior : MonoBehaviour
                 break;
             case BabyState.NeedMet:
                 Debug.Log("changed to needs met!");
+                _animator.SetTrigger("sit");
                 _movement.ChangeState(BabyMovement.MovementState.NONE);
                 _needIconParent.SetActive(false);
                 _dangerRadiusLine.gameObject.SetActive(false);

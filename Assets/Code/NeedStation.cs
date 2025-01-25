@@ -67,6 +67,7 @@ public class NeedStation : MonoBehaviour
         {
             _heldBabies[firstFreeSlot] = baby;
             baby.transform.position = _babyHoldPoints[firstFreeSlot].position;
+            baby.transform.rotation = _babyHoldPoints[firstFreeSlot].rotation;
         }
     }
 
@@ -76,6 +77,10 @@ public class NeedStation : MonoBehaviour
         {
             _heldBabies[_heldBabies.FindIndex(b => b == baby)] = null;
             baby.transform.position = babyDropPoint.position;
+            baby.transform.rotation = babyDropPoint.rotation;
+            
+            Physics.Raycast(transform.position + new Vector3(0f, 100f, 0f), Vector3.down, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Floor"));
+            transform.position = hit.point;
         }
     }       
 }
