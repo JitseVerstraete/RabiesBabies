@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BabySpawner : MonoBehaviour
@@ -9,6 +10,8 @@ public class BabySpawner : MonoBehaviour
     [SerializeField] private List<Transform> spawnPoints;      
     [SerializeField] private float spawnInterval = 2.0f;       
     [SerializeField] private int maxObjects = 10;              
+    
+    private bool _canSpawn = false;
     
     private List<GameObject> _spawnedBabys = new List<GameObject>();
 
@@ -24,12 +27,25 @@ public class BabySpawner : MonoBehaviour
         }
     }
 
+    public void SetCanSpawn(bool canSpawn)
+    {
+        _canSpawn = canSpawn;
+
+        var movementState = canSpawn ? BabyMovement.MovementState.FREE : BabyMovement.MovementState.NONE;
+        Time.timeScale = canSpawn ? 1.0f : 0.0f;
+        
+        foreach (var spawnedBaby in _spawnedBabys.Where(spawnedBaby => spawnedBaby))
+        {
+            spawnedBaby.GetComponent<BabyMovement>().ChangeState(movementState);
+        }
+    }
+    
     private IEnumerator SpawnObjects()
     {
         while (_spawnedBabys.Count < maxObjects)
         {
             yield return new WaitForSeconds(spawnInterval);
-            if (_spawnedBabys.Count < maxObjects)
+            if (_spawnedBabys.Count < maxObjects && _canSpawn)
             {
                 SpawnAtRandomPoint();
             }
@@ -47,9 +63,15 @@ public class BabySpawner : MonoBehaviour
         _spawnedBabys.Add(spawnedObject);
     }
 
-    // Optional: Reset spawn count for reusing the spawner
     public void ResetSpawner()
     {
+        _canSpawn = false;
+        // destroy all objects in list that are not null
+        foreach (var spawnedBaby in _spawnedBabys.Where(spawnedBaby => spawnedBaby))
+        {
+            Destroy(spawnedBaby);
+        }
+
         _spawnedBabys.Clear();
     }
 }

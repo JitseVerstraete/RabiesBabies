@@ -25,6 +25,8 @@ public class GameManager: MonoBehaviour
 
     private bool _gameEndConditionReached = false;
     
+    public BabySpawner babySpawner;
+    
     public float gameTime { get; set; }
 
     public void Start()
@@ -88,21 +90,24 @@ public class GameManager: MonoBehaviour
         {
             case GameState.MainMenu:
                 Debug.Log("Main Menu");
+                gameTime = 0f;
+                babySpawner.ResetSpawner();
                 break;
             case GameState.PauseMenu:
                 Debug.Log("Pause Menu");
+                babySpawner.SetCanSpawn(false);
                 break;
             case GameState.Playing:
                 Debug.Log("Playing Game");
-                gameTime = 0f;
+                babySpawner.SetCanSpawn(true);
                 break;
             case GameState.Ending:
                 Debug.Log("Ending Game");
                 ChangeState(GameState.EndGame);
-                ChangeState(GameState.EndGame);
                 break;
             case GameState.EndGame:
                 Debug.Log("End Game");
+                babySpawner.SetCanSpawn(false);
                 break;
         }
         _currentState = newState;

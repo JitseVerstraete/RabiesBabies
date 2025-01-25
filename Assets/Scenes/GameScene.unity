@@ -790,6 +790,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8592266469873000497, guid: ff661b291b798c943976de20806f2b2b, type: 3}
   m_PrefabInstance: {fileID: 6262247702345699882}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1019111679 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6507398014366967582, guid: ac899326b48c34bef884d228e15d3685, type: 3}
+  m_PrefabInstance: {fileID: 791514114}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78e85d0c5e39b44b3821e0e0c757ad2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1199215685 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7207150268079343323, guid: ff661b291b798c943976de20806f2b2b, type: 3}
@@ -859,6 +870,10 @@ PrefabInstance:
       propertyPath: _timerText
       value: 
       objectReference: {fileID: 1809910437}
+    - target: {fileID: 2410821905452090061, guid: 9692d3b0656a1444c9b1a964922a445e, type: 3}
+      propertyPath: babySpawner
+      value: 
+      objectReference: {fileID: 1019111679}
     - target: {fileID: 2410821905452090061, guid: 9692d3b0656a1444c9b1a964922a445e, type: 3}
       propertyPath: gameOverMenu
       value: 
