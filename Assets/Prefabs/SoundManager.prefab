@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2664965969097162756
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2365945923488395039}
+  - component: {fileID: 4192595065866276326}
+  - component: {fileID: 4912158690874052366}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2365945923488395039
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2664965969097162756}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 983.2512, y: 600.9776, z: -9.071049}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4192595065866276326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2664965969097162756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64c6aa0f19b34a4409880950bafd84a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: pencil_writing
+    clip: {fileID: 8300000, guid: 5026b7d2bed2c684380bd66f8d716f77, type: 3}
+    loop: 1
+    volume: 1
+  - name: pooping
+    clip: {fileID: 8300000, guid: a062a2647ff98fc42979d4c79efbd7e2, type: 3}
+    loop: 0
+    volume: 1
+  - name: cannon_shot
+    clip: {fileID: 8300000, guid: 6a72c976d91e0be47aeec88656b49df0, type: 3}
+    loop: 0
+    volume: 1
+  - name: fall_ground
+    clip: {fileID: 8300000, guid: f4619c3b9c06c984da88dc1093454d13, type: 3}
+    loop: 0
+    volume: 1
+  - name: eating
+    clip: {fileID: 8300000, guid: d3a21d5b50c4ca743a8ae712a7a84397, type: 3}
+    loop: 0
+    volume: 1
+  - name: ambulance
+    clip: {fileID: 8300000, guid: 34ff0f4487c039b4ba195f792ab16de3, type: 3}
+    loop: 0
+    volume: 1
+  - name: baby_growl_long
+    clip: {fileID: 8300000, guid: 2762e3330dc25a64d9bd7e028b72217f, type: 3}
+    loop: 0
+    volume: 1
+  - name: baby_growl_short
+    clip: {fileID: 8300000, guid: 795f62e5a295de441a17c4191c76e6fd, type: 3}
+    loop: 0
+    volume: 1
+  - name: backgroundMusic
+    clip: {fileID: 8300000, guid: 9e50f4d00b66537489b32fe06de7e3eb, type: 3}
+    loop: 1
+    volume: 1
+--- !u!81 &4912158690874052366
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2664965969097162756}
+  m_Enabled: 1

@@ -36,6 +36,12 @@ public class popInAnim : MonoBehaviour
             yield return null;
         }
 
+        while (true)
+        {
+            transform.Rotate(new Vector3(180, 0, 120) * Time.deltaTime);
+            yield return null;
+        }
+        
         _timer = 0;
     }
 }
