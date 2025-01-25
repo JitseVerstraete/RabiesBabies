@@ -110,7 +110,6 @@ public class GameManager: MonoBehaviour
                 break;
             case GameState.EndGame:
                 Debug.Log("End Game");
-                babySpawner.SetCanSpawn(false);
                 var minutes = Mathf.FloorToInt(gameTime / 60);
                 var seconds = Mathf.FloorToInt(gameTime % 60);
                 _endText.text = $"{minutes:00}:{seconds:00} without an accident!";

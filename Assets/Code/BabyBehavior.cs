@@ -48,7 +48,7 @@ public class BabyBehavior : MonoBehaviour
     private BabyMovement _movement;
 
     private BabyBehavior _fightTarget = null;
-    private GameObject _spawnedFightCloud = null;
+    private GameObject _linkedFightCloud = null;
     [SerializeField] private float _fightRunSpeed = 6f;
 
     private void Awake()
@@ -227,17 +227,16 @@ public class BabyBehavior : MonoBehaviour
             }
         }
         
-        if (IsInLayerMask(other.gameObject, LayerMask.GetMask("DangerRadius")))
+        if (other.CompareTag("Baby"))
         {
-            Debug.Log("entered other baby fight circle");
             GameManager.instance.SetGameEndCondition();
             StartCoroutine(BabyBrawlRoutine(otherObject?.GetComponent<BabyBehavior>()));
-
         }
     }
 
     private IEnumerator BabyBrawlRoutine(BabyBehavior otherBaby)
     {
+        
         yield return null;
         //go towards eachother
         _movement.ChangeState(BabyMovement.MovementState.NONE);
@@ -249,23 +248,36 @@ public class BabyBehavior : MonoBehaviour
         {
             otherBaby._fightTarget = this;
         }
-        
-        float distanceToTarget = Vector3.Distance(transform.position, _fightTarget.transform.position);
-        while (distanceToTarget > 0.05f)
+
+        float distanceToTarget = 0;
+        do
         {
+            distanceToTarget = Vector3.Distance(transform.position, _fightTarget.transform.position);
+
             //also rotate towards target
             transform.rotation = Quaternion.LookRotation(_fightTarget.transform.position - transform.position);
-            
+
             Vector3 moveDir = (_fightTarget.transform.position - transform.position).normalized * Mathf.Clamp(_fightRunSpeed * Time.deltaTime, 0f, distanceToTarget);
             transform.position += moveDir;
+
             yield return null;
+        } while (distanceToTarget > 0.1f);
+        
+        _dangerRadiusCollider.gameObject.SetActive(false);
+            
+        _fightTarget._movement.ChangeState(BabyMovement.MovementState.NONE);
+
+        if (_fightTarget._linkedFightCloud != null)
+        {
+            _linkedFightCloud = _fightTarget._linkedFightCloud;
         }
-        
-        //spawn and animate fight cloud
-        GameObject fightCloudPrefab = Resources.Load<GameObject>("FightCloud");
-        GameObject spawnedCloud = Instantiate(fightCloudPrefab);
-        
-        yield return new WaitForSeconds(1f);
+        else if (_linkedFightCloud == null)
+        {
+            GameObject fightCloudPrefab = Resources.Load<GameObject>("FightCloud");
+            GameObject spawnedCloud = Instantiate(fightCloudPrefab, transform.position, transform.rotation);
+            _linkedFightCloud = spawnedCloud;
+            Debug.Log("spawning new fight cloud!");
+        }
     }
     private bool IsInLayerMask(GameObject obj, LayerMask layerMask)
     {

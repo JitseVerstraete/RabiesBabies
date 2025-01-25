@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 4011473179644803622}
   m_Layer: 6
   m_Name: SolidCollider
-  m_TagString: Untagged
+  m_TagString: Baby
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -627,6 +627,8 @@ MonoBehaviour:
   _diaperIcon: {fileID: 21300000, guid: eec6787619c934c28826d438105d118d, type: 3}
   _pathLineRenderer: {fileID: 2944882900309732160}
   _skinnedRenderer: {fileID: 6005051901570712607}
+  _foamParticles: []
+  _fightRunSpeed: 6
 --- !u!114 &2928653592997361897
 MonoBehaviour:
   m_ObjectHideFlags: 0
