@@ -32,14 +32,7 @@ public class BabySpawner : MonoBehaviour
     public void SetCanSpawn(bool canSpawn)
     {
         _canSpawn = canSpawn;
-
-        var movementState = canSpawn ? BabyMovement.MovementState.FREE : BabyMovement.MovementState.NONE;
         Time.timeScale = canSpawn ? 1.0f : 0.0f;
-        
-        foreach (var spawnedBaby in _spawnedBabys.Where(spawnedBaby => spawnedBaby))
-        {
-            spawnedBaby.GetComponent<BabyMovement>().ChangeState(movementState);
-        }
     }
     
     private IEnumerator SpawnObjects()
