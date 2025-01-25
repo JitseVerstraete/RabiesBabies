@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MainMenu : MonoBehaviour
+public class CanvasButtons : MonoBehaviour
 {
     public GameManager gameManager;
 
@@ -12,5 +12,10 @@ public class MainMenu : MonoBehaviour
     public void ExitGameButton()
     {
         Application.Quit();
+    }
+
+    public void GoToMainMenuButton()
+    {
+        gameManager.ChangeState(GameState.MainMenu);
     }
 }
