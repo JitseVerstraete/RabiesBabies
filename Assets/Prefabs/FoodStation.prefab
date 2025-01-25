@@ -195,6 +195,26 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4718388725122502641, guid: 90e92e27dd891406eaba46004e4923ef, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.29
+      objectReference: {fileID: 0}
+    - target: {fileID: 4718388725122502641, guid: 90e92e27dd891406eaba46004e4923ef, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.111
+      objectReference: {fileID: 0}
+    - target: {fileID: 4762437803952942658, guid: 90e92e27dd891406eaba46004e4923ef, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.29
+      objectReference: {fileID: 0}
+    - target: {fileID: 4762437803952942658, guid: 90e92e27dd891406eaba46004e4923ef, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.001
+      objectReference: {fileID: 0}
+    - target: {fileID: 4762437803952942658, guid: 90e92e27dd891406eaba46004e4923ef, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.127
+      objectReference: {fileID: 0}
     - target: {fileID: 5139518195645618231, guid: 90e92e27dd891406eaba46004e4923ef, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -206,6 +226,18 @@ PrefabInstance:
     - target: {fileID: 6055451703256728989, guid: 90e92e27dd891406eaba46004e4923ef, type: 3}
       propertyPath: m_Name
       value: FoodStation
+      objectReference: {fileID: 0}
+    - target: {fileID: 6707811640881618636, guid: 90e92e27dd891406eaba46004e4923ef, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.734
+      objectReference: {fileID: 0}
+    - target: {fileID: 7886427701059415401, guid: 90e92e27dd891406eaba46004e4923ef, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 7886427701059415401, guid: 90e92e27dd891406eaba46004e4923ef, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.52
       objectReference: {fileID: 0}
     - target: {fileID: 8333601546121554617, guid: 90e92e27dd891406eaba46004e4923ef, type: 3}
       propertyPath: m_LocalPosition.x
