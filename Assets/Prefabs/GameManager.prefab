@@ -44,3 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17e46ce7408bf1449ae4471e2d8c7549, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _timerText: {fileID: 0}
+  _gameEndDuration: 1
+  mainMenu: {fileID: 0}
+  pauseMenu: {fileID: 0}
+  gameOverMenu: {fileID: 0}
+  timerUI: {fileID: 0}
