@@ -35,6 +35,7 @@ public class BabyBehavior : MonoBehaviour
     [SerializeField] private Sprite _diaperIcon;
     [SerializeField] private LineRenderer _pathLineRenderer;
     [SerializeField] private SkinnedMeshRenderer _skinnedRenderer;
+    [SerializeField] private List<GameObject> _foamParticles;
     
     private BabyState _currentState;
     private BabyNeed _currentNeed;
@@ -115,6 +116,9 @@ public class BabyBehavior : MonoBehaviour
             case BabyState.Neutral:
                 break;
             case BabyState.Rabid:
+                // disable foams and reset blendshape
+                _foamParticles.ForEach(go => go.SetActive(false));
+                _skinnedRenderer.SetBlendShapeWeight(0, 0);
                 break;
             case BabyState.NeedMet:
                 transform.position = _attachedStation.babyDropPoint.position;
@@ -140,6 +144,8 @@ public class BabyBehavior : MonoBehaviour
             case BabyState.Rabid:
                 Debug.Log("changed to rabid!");
                 _dangerRadiusLine.gameObject.SetActive(true);
+                _foamParticles.ForEach(go => go.SetActive(true));
+                _skinnedRenderer.SetBlendShapeWeight(0, 100);
                 break;
             case BabyState.NeedMet:
                 Debug.Log("changed to needs met!");
