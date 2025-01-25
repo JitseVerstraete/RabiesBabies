@@ -35,7 +35,7 @@ public class BabyMovement : MonoBehaviour
 
 	private void Update()
 	{	
-		// for now, always allow going to PATH state 
+		// for now, always allow going to PATH state except in NONE
 		if (Input.GetMouseButtonDown(0) && IsMouseOverThisBaby() && _state != MovementState.NONE)
 		{
 			ChangeState(MovementState.PATH);
@@ -44,7 +44,13 @@ public class BabyMovement : MonoBehaviour
 		if (_state == MovementState.PATH)
 		{
 			if (Input.GetMouseButton(0) && _drawing)
-				AddPathPoint(GetMouseWorldPosition("Floor"));
+			{
+				Vector3 worldPos = GetMouseWorldPosition("Floor");
+				if (worldPos != Vector3.zero)
+					AddPathPoint(worldPos);
+				else
+					_drawing = false;
+			}
 			else if (Input.GetMouseButtonUp(0)) 
 				_drawing = false;
 
