@@ -51,9 +51,13 @@ public class BabyBehavior : MonoBehaviour
 
     private BabyMovement _movement;
 
+    private RenderTexture _renderTexture;
+
     private BabyBehavior _fightTarget = null;
     private GameObject _linkedFightCloud = null;
     [SerializeField] private float _fightRunSpeed = 6f;
+
+    public RenderTexture RenderTexture => _renderTexture;
 
     private void Awake()
     {
@@ -77,11 +81,12 @@ public class BabyBehavior : MonoBehaviour
         _pathLineRenderer.material.color = color;
         _skinnedRenderer.materials[1].color = color;
 
-        GameObject faceCamView = Instantiate(_faceCamPrefab, FindFirstObjectByType<VerticalLayoutGroup>().transform);
-        RawImage rawImage = faceCamView.GetComponentInChildren<RawImage>();
-        RenderTexture renderTexture = new RenderTexture(rawImage.texture.width, rawImage.texture.height, 24);
-        rawImage.texture = renderTexture;
-        GetComponentInChildren<Camera>().targetTexture = renderTexture;
+        // GameObject faceCamView = Instantiate(_faceCamPrefab, FindFirstObjectByType<VerticalLayoutGroup>().transform);
+        // RawImage rawImage = faceCamView.GetComponentInChildren<RawImage>(); 
+        _renderTexture = new RenderTexture(256, 256, 24);
+        GetComponentInChildren<Camera>().targetTexture = _renderTexture;
+        // rawImage.texture = renderTexture;
+
     }
 
     private void Update()

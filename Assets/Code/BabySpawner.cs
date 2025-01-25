@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Code;
 using UnityEngine;
 
 public class BabySpawner : MonoBehaviour
@@ -74,6 +75,9 @@ public class BabySpawner : MonoBehaviour
         BabyBehavior behavior = spawnedObject.GetComponent<BabyBehavior>();
         behavior.Init(colors[_babyCounter++ % colors.Count]);
         _spawnedBabys.Add(behavior);
+
+        FindFirstObjectByType<SecurityScreens>().AddBaby(behavior);
+        
         yield return null;
     }
 

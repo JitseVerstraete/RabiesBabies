@@ -1,4 +1,5 @@
 using System.Collections;
+using Code;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -101,6 +102,7 @@ public class GameManager: MonoBehaviour
                 gameTime = 0f;
                 _backgroundMusicController.ResetSpeed();
                 babySpawner.ResetSpawner();
+                FindFirstObjectByType<SecurityScreens>().Reset();
                 DestroyAllObjectsSafely(GameObject.FindGameObjectsWithTag("FightCloud"));
                 break;
             case GameState.PauseMenu:
