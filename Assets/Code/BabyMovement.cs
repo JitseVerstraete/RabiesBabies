@@ -6,7 +6,7 @@ using UnityEngine.XR;
 
 public class BabyMovement : MonoBehaviour
 {
-	enum MovementState
+	public enum MovementState
 	{
 		NONE,
 		FREE,
@@ -36,7 +36,7 @@ public class BabyMovement : MonoBehaviour
 	private void Update()
 	{	
 		// for now, always allow going to PATH state 
-		if (Input.GetMouseButtonDown(0) && IsMouseOverThisBaby())
+		if (Input.GetMouseButtonDown(0) && IsMouseOverThisBaby() && _state != MovementState.NONE)
 		{
 			_linePoints.Clear();
 			ChangeState(MovementState.PATH);
@@ -59,7 +59,7 @@ public class BabyMovement : MonoBehaviour
 		}
 	}
 
-	private void ChangeState(MovementState newState)
+	public void ChangeState(MovementState newState)
 	{
 		_state = newState;
 		Debug.Log($"NEW STATE {newState}");
