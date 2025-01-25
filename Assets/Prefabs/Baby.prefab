@@ -398,6 +398,7 @@ MonoBehaviour:
   _gracePeriod: 3
   _needMetDuration: 10
   _fightRadius: 2.18
+  _needIconParent: {fileID: 1380856795338766769}
   _needIconRef: {fileID: 1862415536633998604}
   _hungerIcon: {fileID: 21300000, guid: afdd4562b7b6843f082ff5b8ec18e4cd, type: 3}
   _boredIcon: {fileID: 21300000, guid: 7e63e35a5df0e457cb9152d927d1a19e, type: 3}
@@ -414,6 +415,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 619e822c6fc664941b6a9e764fb96cc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _speed: 3
+  _rotationSpeed: 250
+  _wallCheckDist: 3
 --- !u!120 &2944882900309732160
 LineRenderer:
   serializedVersion: 2
