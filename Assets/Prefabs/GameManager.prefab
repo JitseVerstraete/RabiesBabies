@@ -45,8 +45,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timerText: {fileID: 0}
-  _gameEndDuration: 1
+  _endText: {fileID: 0}
+  _gameEndDuration: 3
   mainMenu: {fileID: 0}
   pauseMenu: {fileID: 0}
   gameOverMenu: {fileID: 0}
   timerUI: {fileID: 0}
+  faceCamsUI: {fileID: 0}
+  babySpawner: {fileID: 0}
+  soundManager: {fileID: 0}
