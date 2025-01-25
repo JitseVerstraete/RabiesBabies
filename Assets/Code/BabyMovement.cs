@@ -78,7 +78,7 @@ public class BabyMovement : MonoBehaviour
 
 	private void AddPathPoint(Vector3 point)
 	{
-		if (_linePoints.Count > 0 && Vector3.Distance(_linePoints.Last(), point) < .05f) return;
+		if (_linePoints.Count > 0 && Vector3.Distance(_linePoints.Last(), point) < .1f) return;
 		if (_lastPointTime > 0 && Time.time - _lastPointTime < .02f) return;
 		
 		point += Vector3.up * .05f;
@@ -109,9 +109,8 @@ public class BabyMovement : MonoBehaviour
 		// Debug.Log($"Moving to point: {_pathIndex}, distance: {dist}, segment: {segmentDistance}, t: {_moveT}");
 
 		transform.position = Vector3.Lerp(_linePoints[_pathIndex-1], _linePoints[_pathIndex], _moveT / totalSegmentTime);
-		transform.rotation = Quaternion.LookRotation(_linePoints[_pathIndex] - transform.position);
 
 		if (Mathf.Approximately(Vector3.Distance(_linePoints[_pathIndex], transform.position), 0)) return;
-		Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(_linePoints[_pathIndex] - transform.position), .5f);
+		transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(_linePoints[_pathIndex] - _linePoints[_pathIndex-1]), 10f * Time.deltaTime);
 	}
 }
