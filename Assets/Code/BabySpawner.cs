@@ -10,7 +10,8 @@ public class BabySpawner : MonoBehaviour
     [SerializeField] private List<Transform> spawnPoints;      
     [SerializeField] private float spawnInterval = 2.0f;       
     [SerializeField] private int maxObjects = 10;
-    [SerializeField] private List<Color> colors;              
+    [SerializeField] private List<Color> colors;
+    [SerializeField] private BackgroundMusicController backgroundMusicController;
     
     private bool _canSpawn = false;
     
@@ -43,6 +44,7 @@ public class BabySpawner : MonoBehaviour
             if (_spawnedBabys.Count < maxObjects && _canSpawn)
             {
                 SpawnAtRandomPoint();
+                backgroundMusicController.SpeedUpMusic();
             }
         }
     }
