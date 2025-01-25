@@ -17,6 +17,7 @@ public class GameManager: MonoBehaviour
     public static GameManager instance { get { return _instance; } }
     private GameState _currentState;
     [SerializeField] private TMP_Text _timerText;
+    [SerializeField] private TMP_Text _endText;
     
     public GameObject mainMenu;
     public GameObject pauseMenu;
@@ -108,6 +109,9 @@ public class GameManager: MonoBehaviour
             case GameState.EndGame:
                 Debug.Log("End Game");
                 babySpawner.SetCanSpawn(false);
+                var minutes = Mathf.FloorToInt(gameTime / 60);
+                var seconds = Mathf.FloorToInt(gameTime % 60);
+                _endText.text = $"{minutes:00}:{seconds:00} without an accident!";
                 break;
         }
         _currentState = newState;
