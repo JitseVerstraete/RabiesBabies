@@ -158,7 +158,7 @@ public class BabyMovement : MonoBehaviour
 		
 		float totalLength = points.Zip(points.Skip(1), (first, second) => Vector3.Distance(first, second)).Sum();
 		
-		_lineRenderer.material.mainTextureScale = totalLength * Vector3.one;
+		_lineRenderer.material.mainTextureScale = totalLength * Vector3.right;
 		_lineRenderer.material.mainTextureOffset += Vector2.one * Time.deltaTime;
 	}
 
