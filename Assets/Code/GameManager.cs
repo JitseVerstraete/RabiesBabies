@@ -7,12 +7,14 @@ public enum GameState
     MainMenu,
     PauseMenu,
     Playing,
+    Ending,
     EndGame
 }
 
 public class GameManager: MonoBehaviour
 {
     private static GameManager _instance;
+    public static GameManager instance { get { return _instance; } }
     private GameState _currentState;
     [SerializeField] private TMP_Text _timerText;
     
@@ -20,6 +22,8 @@ public class GameManager: MonoBehaviour
     public GameObject pauseMenu;
     public GameObject gameOverMenu;
     public GameObject timerUI;
+
+    private bool _gameEndConditionReached = false;
     
     public float gameTime { get; set; }
 
@@ -40,6 +44,7 @@ public class GameManager: MonoBehaviour
         switch (_currentState)
         {
             case GameState.MainMenu:
+                Reset();
                 break;
             case GameState.PauseMenu:
                 break;
@@ -47,12 +52,27 @@ public class GameManager: MonoBehaviour
                 gameTime += Time.deltaTime;
                 var minutes = Mathf.FloorToInt(gameTime / 60);
                 var seconds = Mathf.FloorToInt(gameTime % 60);
+
+                if (_gameEndConditionReached)
+                {
+                    ChangeState(GameState.Ending);
+                }
                 
                 _timerText.text = $"{minutes:00}:{seconds:00}";
                 break;
             case GameState.EndGame:
                 break;
         }
+    }
+
+    private void Reset()
+    {
+        _gameEndConditionReached = false;
+    }
+
+    public void SetGameEndCondition()
+    {
+        _gameEndConditionReached = true;
     }
     
     public void ChangeState(GameState newState)
@@ -76,11 +96,15 @@ public class GameManager: MonoBehaviour
                 Debug.Log("Playing Game");
                 gameTime = 0f;
                 break;
+            case GameState.Ending:
+                Debug.Log("Ending Game");
+                ChangeState(GameState.EndGame);
+                ChangeState(GameState.EndGame);
+                break;
             case GameState.EndGame:
                 Debug.Log("End Game");
                 break;
         }
         _currentState = newState;
     }
-    
 }

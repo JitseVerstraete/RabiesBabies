@@ -61,7 +61,6 @@ public class BabyBehavior : MonoBehaviour
         InitializeDangerCircle();
         _dangerRadiusLine.gameObject.SetActive(false);
 
-        _dangerRadiusCollider.radius = _fightRadius;
     }
 
     private void Update()
@@ -182,6 +181,8 @@ public class BabyBehavior : MonoBehaviour
 
     private void InitializeDangerCircle()
     {
+        _dangerRadiusCollider.radius = _fightRadius;
+        
         List<Vector3> positions = new List<Vector3>();
         int nrPoints = 20;
         for (int i = 0; i < nrPoints; i++)
@@ -211,6 +212,7 @@ public class BabyBehavior : MonoBehaviour
         if (IsInLayerMask(other.gameObject, LayerMask.GetMask("DangerRadius")))
         {
             Debug.Log("entered other baby fight circle");
+            GameManager.instance.SetGameEndCondition();
         }
     }
     
@@ -218,5 +220,4 @@ public class BabyBehavior : MonoBehaviour
     {
         return ((1 << obj.layer) & layerMask) != 0;
     }
-    
 }
