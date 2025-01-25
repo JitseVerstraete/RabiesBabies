@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public enum BabyState
 {
     Neutral,
+    RabidWarning,
     Rabid,
     NeedMet,
     Fighting
@@ -21,15 +22,15 @@ public enum BabyNeed
 
 public class BabyBehavior : MonoBehaviour
 {
-    [SerializeField] private float _gracePeriod = 5f;
+    [SerializeField] private float _gracePeriod = 8f;
+    [SerializeField] private float _rabidWarningTime = 3f;
     [SerializeField] private float _needMetDuration = 10f;
     [SerializeField] private float _fightRadius = 2f;
     [SerializeField] private float _fightMargin = 0.5f;
     [SerializeField] private LineRenderer _dangerRadiusLine = null;
     [SerializeField] private SphereCollider _dangerRadiusCollider = null;
 
-    [Space(5)] 
-    [SerializeField] private GameObject _needIconParent;
+    [Space(5)] [SerializeField] private GameObject _needIconParent;
     [SerializeField] private Image _needIconRef;
     [SerializeField] private Sprite _hungerIcon;
     [SerializeField] private Sprite _boredIcon;
@@ -39,7 +40,7 @@ public class BabyBehavior : MonoBehaviour
     [SerializeField] private List<GameObject> _foamParticles;
     [SerializeField] private GameObject _faceCamPrefab;
     [SerializeField] private GameObject _faceCamParent;
-    
+
     private BabyState _currentState;
     private BabyNeed _currentNeed;
     private float _rabidTimer = 0f;
@@ -75,7 +76,7 @@ public class BabyBehavior : MonoBehaviour
 
         _pathLineRenderer.material.color = color;
         _skinnedRenderer.materials[1].color = color;
-        
+
         GameObject faceCamView = Instantiate(_faceCamPrefab, FindFirstObjectByType<VerticalLayoutGroup>().transform);
         RawImage rawImage = faceCamView.GetComponentInChildren<RawImage>();
         RenderTexture renderTexture = new RenderTexture(rawImage.texture.width, rawImage.texture.height, 24);
@@ -88,6 +89,17 @@ public class BabyBehavior : MonoBehaviour
         switch (_currentState)
         {
             case BabyState.Neutral:
+                _rabidTimer += Time.deltaTime;
+
+                if (_gracePeriod - _rabidTimer <= _rabidWarningTime)
+                {
+                    Debug.LogWarning("switching ot rabidWarning");
+                    ChangeState(BabyState.RabidWarning);
+                }
+
+
+                break;
+            case BabyState.RabidWarning:
                 _rabidTimer += Time.deltaTime;
                 if (_rabidTimer >= _gracePeriod)
                 {
@@ -106,7 +118,7 @@ public class BabyBehavior : MonoBehaviour
                 {
                     if (baby == this) continue;
                     if (baby._currentState == BabyState.NeedMet) continue;
-                    
+
                     float distance = Vector3.Distance(transform.position, baby.transform.position);
                     if (distance < _fightRadius + _fightMargin && distance < closestDistance)
                     {
@@ -121,12 +133,12 @@ public class BabyBehavior : MonoBehaviour
                     GameManager.instance.SetGameEndCondition();
                     StartCoroutine(BabyBrawlRoutine(closestBaby));
                 }
-                
+
                 break;
             case BabyState.NeedMet:
                 _needMetTimer += Time.deltaTime;
                 transform.rotation = Quaternion.Euler(0f, 360f * _needMetTimer / _needMetDuration, 0f);
-                
+
                 if (_needMetTimer >= _needMetDuration)
                 {
                     ChangeState(BabyState.Neutral);
@@ -134,22 +146,62 @@ public class BabyBehavior : MonoBehaviour
 
                 break;
             case BabyState.Fighting:
-                
+
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
     }
 
+    private IEnumerator PulsingWarning()
+    {
+        Debug.LogWarning("pulsing warning");
+        _dangerRadiusLine.gameObject.SetActive(true);
+
+        float alpha = 0;
+        float pulseDuration = 0.25f;
+        float pulseBreak = 0.1f;
+        float alphaPerSecond = 1f / pulseDuration;
+        
+        Material material = new Material(_dangerRadiusLine.material);
+        _dangerRadiusLine.material = material;
+
+        bool reverse = false;
+        while (_currentState != BabyState.Rabid)
+        {
+            Debug.Log(alpha);
+            
+            if (alpha > 1)
+            {
+                reverse = true;
+            }
+            else if (alpha < 0)
+            {
+                reverse = false;
+                yield return new WaitForSeconds(pulseBreak);
+            }
+
+            alpha += alphaPerSecond * Time.deltaTime * (reverse ? -1 : 1);
+            material.color = new Color( material.color.r, material.color.g, material.color.b, alpha);
+
+            yield return null;
+        }
+
+        Debug.LogWarning("exit pulsing");
+        material.color = new Color( material.color.r, material.color.g, material.color.b, 1);
+    }
+
     private void ChangeState(BabyState newState)
     {
         if (_currentState == newState)
             return;
-        
+
         //exit from state stuff
         switch (_currentState)
         {
             case BabyState.Neutral:
+                break;
+            case BabyState.RabidWarning:
                 break;
             case BabyState.Rabid:
                 // disable foams and reset blendshape
@@ -163,22 +215,25 @@ public class BabyBehavior : MonoBehaviour
                 _attachedStation = null;
                 _movement.ChangeState(BabyMovement.MovementState.FREE);
                 _needIconParent.SetActive(true);
-                
+
                 SetNeed(GetRandomNeed(_currentNeed));
                 break;
             case BabyState.Fighting:
-                
+
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
-        
+
 
         //go to state stuff
         switch (newState)
         {
             case BabyState.Neutral:
                 Debug.Log("changed to neutral!");
+                break;
+            case BabyState.RabidWarning:
+                StartCoroutine(PulsingWarning());
                 break;
             case BabyState.Rabid:
                 Debug.Log("changed to rabid!");
@@ -231,7 +286,7 @@ public class BabyBehavior : MonoBehaviour
 
         return newNeed;
     }
-    
+
     private BabyNeed GetRandomNeed()
     {
         var enumValues = Enum.GetValues(typeof(BabyNeed));
@@ -243,7 +298,7 @@ public class BabyBehavior : MonoBehaviour
     private void InitializeDangerCircle()
     {
         _dangerRadiusCollider.radius = _fightRadius;
-        
+
         List<Vector3> positions = new List<Vector3>();
         int nrPoints = 20;
         for (int i = 0; i < nrPoints; i++)
@@ -251,6 +306,7 @@ public class BabyBehavior : MonoBehaviour
             float angle = ((i + 1f) / nrPoints) * 2f * Mathf.PI;
             positions.Add(new Vector3(_fightRadius * Mathf.Cos(angle), 0f, _fightRadius * Mathf.Sin(angle)));
         }
+
         _dangerRadiusLine.positionCount = nrPoints;
         _dangerRadiusLine.SetPositions(positions.ToArray());
     }
@@ -259,7 +315,7 @@ public class BabyBehavior : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         GameObject otherObject = other.attachedRigidbody?.gameObject;
-        if (otherObject &&  otherObject.CompareTag("NeedStation"))
+        if (otherObject && otherObject.CompareTag("NeedStation"))
         {
             NeedStation collidedStation = otherObject.GetComponent<NeedStation>();
             if (collidedStation.need == _currentNeed)
@@ -273,7 +329,6 @@ public class BabyBehavior : MonoBehaviour
 
     private IEnumerator BabyBrawlRoutine(BabyBehavior otherBaby)
     {
-        
         yield return null;
         //go towards eachother
         _movement.ChangeState(BabyMovement.MovementState.NONE);
@@ -281,6 +336,7 @@ public class BabyBehavior : MonoBehaviour
         {
             _fightTarget = otherBaby;
         }
+
         if (otherBaby._fightTarget == null)
         {
             otherBaby._fightTarget = this;
@@ -299,9 +355,9 @@ public class BabyBehavior : MonoBehaviour
 
             yield return null;
         } while (distanceToTarget > 0.1f);
-        
+
         _dangerRadiusCollider.gameObject.SetActive(false);
-            
+
         _fightTarget._movement.ChangeState(BabyMovement.MovementState.NONE);
 
         if (_fightTarget._linkedFightCloud != null)
@@ -316,6 +372,7 @@ public class BabyBehavior : MonoBehaviour
             Debug.Log("spawning new fight cloud!");
         }
     }
+
     private bool IsInLayerMask(GameObject obj, LayerMask layerMask)
     {
         return ((1 << obj.layer) & layerMask) != 0;

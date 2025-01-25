@@ -502,21 +502,21 @@ LineRenderer:
       serializedVersion: 2
       key0: {r: 1, g: 1, b: 1, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
-      key2: {r: 0, g: 0, b: 0, a: 0}
+      key2: {r: 1, g: 1, b: 1, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
       ctime0: 0
-      ctime1: 65535
-      ctime2: 0
+      ctime1: 6361
+      ctime2: 65535
       ctime3: 0
       ctime4: 0
       ctime5: 0
       ctime6: 0
       ctime7: 0
-      atime0: 0
+      atime0: 193
       atime1: 65535
       atime2: 0
       atime3: 0
@@ -525,8 +525,8 @@ LineRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_ColorSpace: -1
-      m_NumColorKeys: 2
+      m_ColorSpace: 0
+      m_NumColorKeys: 3
       m_NumAlphaKeys: 2
     numCornerVertices: 0
     numCapVertices: 0
@@ -725,9 +725,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37fec33652e6042e1babddbef27de1d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gracePeriod: 3
+  _gracePeriod: 6
+  _rabidWarningTime: 1.5
   _needMetDuration: 10
   _fightRadius: 2
+  _fightMargin: 0.5
   _dangerRadiusLine: {fileID: 4490940819712677683}
   _dangerRadiusCollider: {fileID: 7826892906896458439}
   _needIconParent: {fileID: 1380856795338766769}
@@ -900,7 +902,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7227222954909824067}
   - component: {fileID: 8301919077880012581}
-  - component: {fileID: 8205130377479772175}
   m_Layer: 6
   m_Name: FaceCam
   m_TagString: Untagged
@@ -974,14 +975,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &8205130377479772175
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6235755562762209118}
-  m_Enabled: 1
 --- !u!1 &6285545604008986284
 GameObject:
   m_ObjectHideFlags: 0
