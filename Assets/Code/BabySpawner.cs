@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BabySpawner : MonoBehaviour
@@ -8,9 +9,13 @@ public class BabySpawner : MonoBehaviour
     [SerializeField] private GameObject _objectToSpawn;        
     [SerializeField] private List<Transform> spawnPoints;      
     [SerializeField] private float spawnInterval = 2.0f;       
-    [SerializeField] private int maxObjects = 10;              
+    [SerializeField] private int maxObjects = 10;
+    [SerializeField] private List<Color> colors;              
+    
+    private bool _canSpawn = false;
     
     private List<GameObject> _spawnedBabys = new List<GameObject>();
+    private int _babyCounter = 0;
 
     private void Start()
     {
@@ -24,12 +29,18 @@ public class BabySpawner : MonoBehaviour
         }
     }
 
+    public void SetCanSpawn(bool canSpawn)
+    {
+        _canSpawn = canSpawn;
+        Time.timeScale = canSpawn ? 1.0f : 0.0f;
+    }
+    
     private IEnumerator SpawnObjects()
     {
         while (_spawnedBabys.Count < maxObjects)
         {
             yield return new WaitForSeconds(spawnInterval);
-            if (_spawnedBabys.Count < maxObjects)
+            if (_spawnedBabys.Count < maxObjects && _canSpawn)
             {
                 SpawnAtRandomPoint();
             }
@@ -43,13 +54,19 @@ public class BabySpawner : MonoBehaviour
         
         GameObject spawnedObject = Instantiate(_objectToSpawn, spawnPoint.position, spawnPoint.rotation);
         BabyBehavior behavior = spawnedObject.GetComponent<BabyBehavior>();
-        behavior.Init();
+        behavior.Init(colors[_babyCounter++ % colors.Count]);
         _spawnedBabys.Add(spawnedObject);
     }
 
-    // Optional: Reset spawn count for reusing the spawner
     public void ResetSpawner()
     {
+        _canSpawn = false;
+        // destroy all objects in list that are not null
+        foreach (var spawnedBaby in _spawnedBabys.Where(spawnedBaby => spawnedBaby))
+        {
+            Destroy(spawnedBaby);
+        }
+
         _spawnedBabys.Clear();
     }
 }

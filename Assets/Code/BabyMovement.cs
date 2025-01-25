@@ -157,9 +157,9 @@ public class BabyMovement : MonoBehaviour
 		_lineRenderer.positionCount = points.Count;
 		_lineRenderer.SetPositions(points.ToArray());
 		
-		float totalLength = points.Zip(points.Skip(1), (first, second) => Vector3.Distance(first, second)).Sum();
-		
+		// float totalLength = points.Zip(points.Skip(1), (first, second) => Vector3.Distance(first, second)).Sum();
 		// _lineRenderer.material.mainTextureScale = totalLength * Vector3.right;
+		
 		_lineRenderer.material.mainTextureOffset += Vector2.one * Time.deltaTime;
 	}
 

@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,6 +33,9 @@ public class BabyBehavior : MonoBehaviour
     [SerializeField] private Sprite _hungerIcon;
     [SerializeField] private Sprite _boredIcon;
     [SerializeField] private Sprite _diaperIcon;
+    [SerializeField] private LineRenderer _pathLineRenderer;
+    [SerializeField] private SkinnedMeshRenderer _skinnedRenderer;
+    [SerializeField] private List<GameObject> _foamParticles;
     
     private BabyState _currentState;
     private BabyNeed _currentNeed;
@@ -42,12 +47,16 @@ public class BabyBehavior : MonoBehaviour
 
     private BabyMovement _movement;
 
+    private BabyBehavior _fightTarget = null;
+    private GameObject _spawnedFightCloud = null;
+    [SerializeField] private float _fightRunSpeed = 6f;
+
     private void Awake()
     {
         _movement = GetComponent<BabyMovement>();
     }
 
-    public void Init()
+    public void Init(Color color)
     {
         ChangeState(BabyState.Neutral);
         SetNeed(GetRandomNeed());
@@ -61,6 +70,8 @@ public class BabyBehavior : MonoBehaviour
         InitializeDangerCircle();
         _dangerRadiusLine.gameObject.SetActive(false);
 
+        _pathLineRenderer.material.color = color;
+        _skinnedRenderer.materials[1].color = color;
     }
 
     private void Update()
@@ -105,13 +116,18 @@ public class BabyBehavior : MonoBehaviour
             case BabyState.Neutral:
                 break;
             case BabyState.Rabid:
+                // disable foams and reset blendshape
+                _foamParticles.ForEach(go => go.SetActive(false));
+                _skinnedRenderer.SetBlendShapeWeight(0, 0);
                 break;
             case BabyState.NeedMet:
                 transform.position = _attachedStation.babyDropPoint.position;
                 transform.rotation = Quaternion.identity;
                 _attachedStation = null;
                 _movement.ChangeState(BabyMovement.MovementState.FREE);
+                _dangerRadiusLine.gameObject.SetActive(false);
                 _needIconParent.SetActive(true);
+                
                 SetNeed(GetRandomNeed(_currentNeed));
                 break;
             default:
@@ -128,6 +144,8 @@ public class BabyBehavior : MonoBehaviour
             case BabyState.Rabid:
                 Debug.Log("changed to rabid!");
                 _dangerRadiusLine.gameObject.SetActive(true);
+                _foamParticles.ForEach(go => go.SetActive(true));
+                _skinnedRenderer.SetBlendShapeWeight(0, 100);
                 break;
             case BabyState.NeedMet:
                 Debug.Log("changed to needs met!");
@@ -197,7 +215,7 @@ public class BabyBehavior : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        GameObject otherObject = other .attachedRigidbody?.gameObject;
+        GameObject otherObject = other.attachedRigidbody?.gameObject;
         if (otherObject &&  otherObject.CompareTag("NeedStation"))
         {
             NeedStation collidedStation = otherObject.GetComponent<NeedStation>();
@@ -213,9 +231,42 @@ public class BabyBehavior : MonoBehaviour
         {
             Debug.Log("entered other baby fight circle");
             GameManager.instance.SetGameEndCondition();
+            StartCoroutine(BabyBrawlRoutine(otherObject?.GetComponent<BabyBehavior>()));
+
         }
     }
-    
+
+    private IEnumerator BabyBrawlRoutine(BabyBehavior otherBaby)
+    {
+        yield return null;
+        //go towards eachother
+        _movement.ChangeState(BabyMovement.MovementState.NONE);
+        if (_fightTarget == null)
+        {
+            _fightTarget = otherBaby;
+        }
+        if (otherBaby._fightTarget == null)
+        {
+            otherBaby._fightTarget = this;
+        }
+        
+        float distanceToTarget = Vector3.Distance(transform.position, _fightTarget.transform.position);
+        while (distanceToTarget > 0.05f)
+        {
+            //also rotate towards target
+            transform.rotation = Quaternion.LookRotation(_fightTarget.transform.position - transform.position);
+            
+            Vector3 moveDir = (_fightTarget.transform.position - transform.position).normalized * Mathf.Clamp(_fightRunSpeed * Time.deltaTime, 0f, distanceToTarget);
+            transform.position += moveDir;
+            yield return null;
+        }
+        
+        //spawn and animate fight cloud
+        GameObject fightCloudPrefab = Resources.Load<GameObject>("FightCloud");
+        GameObject spawnedCloud = Instantiate(fightCloudPrefab);
+        
+        yield return new WaitForSeconds(1f);
+    }
     private bool IsInLayerMask(GameObject obj, LayerMask layerMask)
     {
         return ((1 << obj.layer) & layerMask) != 0;

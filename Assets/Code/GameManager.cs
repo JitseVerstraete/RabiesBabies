@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,13 +18,17 @@ public class GameManager: MonoBehaviour
     public static GameManager instance { get { return _instance; } }
     private GameState _currentState;
     [SerializeField] private TMP_Text _timerText;
+    [SerializeField] private TMP_Text _endText;
     
+    [SerializeField] private float _gameEndDuration = 5f;
     public GameObject mainMenu;
     public GameObject pauseMenu;
     public GameObject gameOverMenu;
     public GameObject timerUI;
 
     private bool _gameEndConditionReached = false;
+    
+    public BabySpawner babySpawner;
     
     public float gameTime { get; set; }
 
@@ -88,23 +93,36 @@ public class GameManager: MonoBehaviour
         {
             case GameState.MainMenu:
                 Debug.Log("Main Menu");
+                gameTime = 0f;
+                babySpawner.ResetSpawner();
                 break;
             case GameState.PauseMenu:
                 Debug.Log("Pause Menu");
+                babySpawner.SetCanSpawn(false);
                 break;
             case GameState.Playing:
                 Debug.Log("Playing Game");
-                gameTime = 0f;
+                babySpawner.SetCanSpawn(true);
                 break;
             case GameState.Ending:
                 Debug.Log("Ending Game");
-                ChangeState(GameState.EndGame);
-                ChangeState(GameState.EndGame);
+                StartCoroutine(WaitThenEndGame());
                 break;
             case GameState.EndGame:
                 Debug.Log("End Game");
+                babySpawner.SetCanSpawn(false);
+                var minutes = Mathf.FloorToInt(gameTime / 60);
+                var seconds = Mathf.FloorToInt(gameTime % 60);
+                _endText.text = $"{minutes:00}:{seconds:00} without an accident!";
                 break;
         }
         _currentState = newState;
     }
+
+    private IEnumerator WaitThenEndGame()
+    {
+        yield return new WaitForSeconds(_gameEndDuration);
+        ChangeState(GameState.EndGame);
+    }
+    
 }
