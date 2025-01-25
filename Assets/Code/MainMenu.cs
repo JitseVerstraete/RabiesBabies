@@ -3,16 +3,6 @@ using UnityEngine;
 public class MainMenu : MonoBehaviour
 {
     public GameManager gameManager;
-    
-    void Start()
-    {
-        gameManager.ChangeState(GameState.MainMenu);
-    }
-
-    void Update()
-    {
-        
-    }
 
     public void StartGameButton()
     {
