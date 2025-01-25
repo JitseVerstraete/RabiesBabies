@@ -26,6 +26,7 @@ public class GameManager: MonoBehaviour
     public GameObject pauseMenu;
     public GameObject gameOverMenu;
     public GameObject timerUI;
+    public GameObject faceCamsUI;
 
     private bool _gameEndConditionReached = false;
     
@@ -87,6 +88,7 @@ public class GameManager: MonoBehaviour
 
         mainMenu.SetActive(newState == GameState.MainMenu);
         timerUI.SetActive(newState == GameState.Playing);
+        faceCamsUI.SetActive(newState == GameState.Playing);
         pauseMenu.SetActive(newState == GameState.PauseMenu);
         gameOverMenu.SetActive(newState == GameState.EndGame);
         
