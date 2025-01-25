@@ -32,7 +32,7 @@ public class BabyBehavior : MonoBehaviour
 
     private void Awake()
     {
-        Init();
+        
     }
 
     public void Init()
