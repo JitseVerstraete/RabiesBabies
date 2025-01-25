@@ -9,9 +9,8 @@ public class ObjectSpawner : MonoBehaviour
     [SerializeField] private List<Transform> spawnPoints;      
     [SerializeField] private float spawnInterval = 2.0f;       
     [SerializeField] private int maxObjects = 10;              
-    [SerializeField] private bool loopSpawning = true;         
-
-    private int currentObjectCount = 0;                        
+    
+    private List<GameObject> _spawnedBabys = new List<GameObject>();
 
     private void Start()
     {
@@ -27,16 +26,13 @@ public class ObjectSpawner : MonoBehaviour
 
     private IEnumerator SpawnObjects()
     {
-        while (loopSpawning || currentObjectCount < maxObjects)
+        while (_spawnedBabys.Count < maxObjects)
         {
-            if (currentObjectCount < maxObjects)
+            yield return new WaitForSeconds(spawnInterval);
+            if (_spawnedBabys.Count < maxObjects)
             {
                 SpawnAtRandomPoint();
-                currentObjectCount++;
             }
-
-            // Wait for the interval before spawning the next object
-            yield return new WaitForSeconds(spawnInterval);
         }
     }
 
@@ -48,11 +44,12 @@ public class ObjectSpawner : MonoBehaviour
         GameObject spawnedObject = Instantiate(_objectToSpawn, spawnPoint.position, spawnPoint.rotation);
         BabyBehavior behavior = spawnedObject.GetComponent<BabyBehavior>();
         behavior.Init();
+        _spawnedBabys.Add(spawnedObject);
     }
 
     // Optional: Reset spawn count for reusing the spawner
     public void ResetSpawner()
     {
-        currentObjectCount = 0;
+        _spawnedBabys.Clear();
     }
 }

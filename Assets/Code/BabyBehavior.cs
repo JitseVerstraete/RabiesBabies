@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using Unity.VisualScripting;
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public enum BabyState
@@ -30,11 +31,6 @@ public class BabyBehavior : MonoBehaviour
 
     private float _needMetTimer = 0f;
 
-    private void Awake()
-    {
-        
-    }
-
     public void Init()
     {
         ChangeState(BabyState.Neutral);
@@ -43,6 +39,9 @@ public class BabyBehavior : MonoBehaviour
         _rabidTimer = 0f;
 
         Debug.Log("Baby need " + _currentNeed.ToString());
+        
+        Physics.Raycast(transform.position + new Vector3(0f, 100f, 0f), Vector3.down, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Floor"));
+        transform.position = hit.point;
     }
 
     private void Update()
