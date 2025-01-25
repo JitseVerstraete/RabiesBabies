@@ -12,8 +12,13 @@ public enum GameState
 public class GameManager: MonoBehaviour
 {
     private static GameManager _instance;
-    
     private GameState _currentState;
+    
+    public GameObject mainMenu;
+    public GameObject pauseMenu;
+    public GameObject gameOverMenu;
+    public GameObject timerUI;
+    
     public float gameTime { get; set; }
 
     public void Awake()
