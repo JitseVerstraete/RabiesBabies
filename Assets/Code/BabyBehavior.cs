@@ -23,6 +23,7 @@ public class BabyBehavior : MonoBehaviour
     [SerializeField] private float _fightRadius = 2f;
 
     [Space(5)] 
+    [SerializeField] private GameObject _needIconParent;
     [SerializeField] private Image _needIconRef;
     [SerializeField] private Sprite _hungerIcon;
     [SerializeField] private Sprite _boredIcon;
@@ -103,6 +104,7 @@ public class BabyBehavior : MonoBehaviour
                 transform.rotation = Quaternion.identity;
                 _attachedStation = null;
                 _movement.ChangeState(BabyMovement.MovementState.FREE);
+                _needIconParent.SetActive(true);
                 SetNeed(GetRandomNeed(_currentNeed));
                 break;
             default:
@@ -122,6 +124,7 @@ public class BabyBehavior : MonoBehaviour
             case BabyState.NeedMet:
                 Debug.Log("changed to needs met!");
                 _movement.ChangeState(BabyMovement.MovementState.NONE);
+                _needIconParent.SetActive(false);
                 _rabidTimer = 0f;
                 _needMetTimer = 0f;
                 break;
