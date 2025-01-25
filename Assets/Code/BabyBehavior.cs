@@ -30,8 +30,10 @@ public class BabyBehavior : MonoBehaviour
     [SerializeField] private LineRenderer _dangerRadiusLine = null;
     [SerializeField] private SphereCollider _dangerRadiusCollider = null;
 
-    [Space(5)] [SerializeField] private GameObject _needIconParent;
+    [SerializeField] private GameObject _needIconParent;
     [SerializeField] private Image _needIconRef;
+    [SerializeField] private GameObject _stationImageParent;
+    [SerializeField] private Image _stationFillImage;
     [SerializeField] private Sprite _hungerIcon;
     [SerializeField] private Sprite _boredIcon;
     [SerializeField] private Sprite _diaperIcon;
@@ -70,6 +72,8 @@ public class BabyBehavior : MonoBehaviour
         SetNeed(GetRandomNeed());
         _rabidTimer = 0f;
 
+        _stationFillImage.color = color;
+
         Debug.Log("Baby need " + _currentNeed.ToString());
 
         Physics.Raycast(transform.position + new Vector3(0f, 100f, 0f), Vector3.down, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Floor"));
@@ -87,6 +91,8 @@ public class BabyBehavior : MonoBehaviour
         GetComponentInChildren<Camera>().targetTexture = _renderTexture;
         // rawImage.texture = renderTexture;
 
+        _needIconParent.SetActive(true);
+        _stationImageParent.SetActive(false);
     }
 
     private void Update()
@@ -100,7 +106,7 @@ public class BabyBehavior : MonoBehaviour
                 {
                     ChangeState(BabyState.RabidWarning);
                 }
-                
+
                 break;
             case BabyState.RabidWarning:
                 _rabidTimer += Time.deltaTime;
@@ -141,6 +147,8 @@ public class BabyBehavior : MonoBehaviour
             case BabyState.NeedMet:
                 _needMetTimer += Time.deltaTime;
 
+                _stationFillImage.fillAmount = _needMetTimer / _needMetDuration;
+
                 if (_needMetTimer >= _needMetDuration)
                 {
                     ChangeState(BabyState.Neutral);
@@ -163,14 +171,13 @@ public class BabyBehavior : MonoBehaviour
         float pulseDuration = 0.25f;
         float pulseBreak = 0.1f;
         float alphaPerSecond = 1f / pulseDuration;
-        
+
         Material material = new Material(_dangerRadiusLine.material);
         _dangerRadiusLine.material = material;
 
         bool reverse = false;
         while (_currentState != BabyState.Rabid)
         {
-            
             if (alpha > 1)
             {
                 reverse = true;
@@ -182,12 +189,12 @@ public class BabyBehavior : MonoBehaviour
             }
 
             alpha += alphaPerSecond * Time.deltaTime * (reverse ? -1 : 1);
-            material.color = new Color( material.color.r, material.color.g, material.color.b, alpha);
+            material.color = new Color(material.color.r, material.color.g, material.color.b, alpha);
 
             yield return null;
         }
-        
-        material.color = new Color( material.color.r, material.color.g, material.color.b, 1);
+
+        material.color = new Color(material.color.r, material.color.g, material.color.b, 1);
     }
 
     private void ChangeState(BabyState newState)
@@ -214,6 +221,7 @@ public class BabyBehavior : MonoBehaviour
                 _attachedStation = null;
                 _movement.ChangeState(BabyMovement.MovementState.FREE);
                 _needIconParent.SetActive(true);
+                _stationImageParent.SetActive(false);
 
                 SetNeed(GetRandomNeed(_currentNeed));
                 break;
@@ -246,6 +254,7 @@ public class BabyBehavior : MonoBehaviour
                 _movement.ChangeState(BabyMovement.MovementState.NONE);
                 _needIconParent.SetActive(false);
                 _dangerRadiusLine.gameObject.SetActive(false);
+                _stationImageParent.SetActive(true);
                 _rabidTimer = 0f;
                 _needMetTimer = 0f;
                 break;
