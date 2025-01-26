@@ -165,7 +165,6 @@ public class GameManager: MonoBehaviour
             yield return null;
         }
 
-        // todo play sound
         SoundManager.Instance.PlaySound("baby_growl_short");
         
         yield return new WaitForSeconds(1f);
@@ -201,7 +200,7 @@ public class GameManager: MonoBehaviour
         }
 
         yield return new WaitForSeconds(1f);
-        _endDaysText.text = "0 DAYS(S)";
+        _endDaysText.text = "0 DAY(S)";
         yield return new WaitForSeconds(1f);
         _scoreText.text = result;
     }
