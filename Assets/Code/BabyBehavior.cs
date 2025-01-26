@@ -305,6 +305,7 @@ public class BabyBehavior : MonoBehaviour
                 break;
             case BabyState.Fighting:
                 SoundManager.Instance.PlaySound("fight");
+                _needIconParent.SetActive(false);
                 break;
         }
 
