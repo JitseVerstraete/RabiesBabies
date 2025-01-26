@@ -390,7 +390,7 @@ MonoBehaviour:
   - {fileID: 6061056179109268207}
   - {fileID: 7016136586194747270}
   startSpawnPoint: {fileID: 0}
-  spawnInterval: 2
+  spawnInterval: 7
   maxObjects: 10
   colors:
   - {r: 0.990566, g: 0.1448469, b: 0.1448469, a: 1}
@@ -727,6 +727,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8333601546121554617}
     m_Modifications:
+    - target: {fileID: 516565343828287030, guid: 7c075eea461054ec4b1e16bd9efb3416, type: 3}
+      propertyPath: ShapeModule.angle
+      value: 10.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 516565343828287030, guid: 7c075eea461054ec4b1e16bd9efb3416, type: 3}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 1832710015340146382, guid: 7c075eea461054ec4b1e16bd9efb3416, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 605008967923086151, guid: aa16fe58f635e3b48ace8759b3299684, type: 3}
+    - target: {fileID: 1832710015340146382, guid: 7c075eea461054ec4b1e16bd9efb3416, type: 3}
+      propertyPath: m_RenderMode
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1832710015340146382, guid: 7c075eea461054ec4b1e16bd9efb3416, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 3648208115980114037, guid: 7c075eea461054ec4b1e16bd9efb3416, type: 3}
       propertyPath: m_Name
       value: AmbulanceCannon

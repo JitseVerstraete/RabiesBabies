@@ -14,7 +14,7 @@ public class BabyMovement : MonoBehaviour
 	}
 
 	[SerializeField] private float _speed = 3f;
-	[SerializeField] private float _rotationSpeed = 250f;
+	[SerializeField] private float _rotationSpeed = 300f;
 	[SerializeField] private float _wallCheckDist = 3f;
 	[SerializeField] private LineRenderer _pathLineRenderer;
 
@@ -201,16 +201,20 @@ public class BabyMovement : MonoBehaviour
 		float distRight = GetWallDistance(dirRight);
 
 		float dist = (distLeft < distRight) ? distLeft : distRight;
+		
+		// TODO if tooo close, just reverse em!
+		//if (dist < .15f)
+		//{
+		//	transform.Rotate(Vector3.up * 45f);
+		//	return;
+		//}
+		
 		if (dist < _wallCheckDist)
 		{
 			// rotate 
 			// transform.Rotate(Vector3.up, ((distLeft < distRight) ? -1 : 1 * _rotationSpeed) * distLeft * Time.deltaTime);
-			_rotationRemaining = ((distLeft < distRight) ? -1 : 1) * 70f;
+			_rotationRemaining = ((distLeft < distRight) ? -1 : 1) * 85f;
 		}
-		
-		// TODO new system - baby keeps rotating after finding wall
-		// start a random rotation for a second
-		// keep track in _rotationRemaining
 	}
 
 	private float GetWallDistance(Vector3 direction)
