@@ -172,6 +172,12 @@ public class GameManager: MonoBehaviour
     private IEnumerator SickIntroAnimation()
     {
         // RABID!!
+        GameObject[] particleRenderers = GameObject.FindGameObjectsWithTag("IntroParticles");
+        foreach (GameObject particleRenderer in particleRenderers)
+        {
+            particleRenderer.GetComponent<ParticleSystem>().Play();
+        }
+        
         float t = 0;
         while (t<1)
         {
