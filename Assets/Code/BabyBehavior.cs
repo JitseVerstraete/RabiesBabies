@@ -256,7 +256,8 @@ public class BabyBehavior : MonoBehaviour
                 // disable foams and reset blendshape
                 _foamParticles.ForEach(go => go.SetActive(false));
                 _skinnedRenderer.SetBlendShapeWeight(0, 0);
-                _skinnedRenderer.materials[3].SetColor("_Emission", Color.white);
+                _skinnedRenderer.materials[3].SetColor("_Emission", Color.white); // reset eyes
+                _skinnedRenderer.materials[0].color = _skinNormalColor;
                 break;
             case BabyState.NeedMet:
                 _animator.SetTrigger("crawl");
@@ -298,6 +299,7 @@ public class BabyBehavior : MonoBehaviour
                 _foamParticles.ForEach(go => go.SetActive(true));
                 _skinnedRenderer.SetBlendShapeWeight(0, 100);
                 _skinnedRenderer.materials[3].SetColor("_Emission", Color.red);
+                _skinnedRenderer.materials[0].color = _skinRabidColor;
                 SoundManager.Instance.PlaySound("baby_growl_short");
                 break;
             case BabyState.NeedMet:

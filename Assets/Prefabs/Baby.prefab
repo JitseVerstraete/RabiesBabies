@@ -1077,7 +1077,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 3
   _rotationSpeed: 250
-  _wallCheckDist: 3
+  _wallCheckDist: 4
   _pathLineRenderer: {fileID: 9071550426299225969}
 --- !u!54 &38372870482891278
 Rigidbody:

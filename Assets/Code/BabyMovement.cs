@@ -178,7 +178,7 @@ public class BabyMovement : MonoBehaviour
 		if (!Mathf.Approximately(_rotationRemaining, 0))
 		{
 			float sign = Mathf.Sign(_rotationRemaining);
-			Vector3 rotation = new Vector3(0, sign *70f * Time.deltaTime * 2, 0); // make 70 into seriaz variable
+			Vector3 rotation = new Vector3(0, sign * 85f * Time.deltaTime * 2, 0); // make 70 into seriaz variable
 			transform.Rotate(rotation, Space.Self);
 
 			_rotationRemaining -= sign * 70f * Time.deltaTime * 2;

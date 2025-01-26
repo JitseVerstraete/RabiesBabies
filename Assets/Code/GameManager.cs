@@ -196,8 +196,8 @@ public class GameManager: MonoBehaviour
         while (t<2)
         {
             t += Time.deltaTime;
-            Camera.main.transform.position = Vector3.Lerp(_intro.transform.GetChild(1).position, _origCamPosition, t*2);
-            Camera.main.transform.rotation = Quaternion.Slerp(_intro.transform.GetChild(1).rotation, _origCamRotation, t*2);
+            Camera.main.transform.position = Vector3.Lerp(_intro.transform.GetChild(1).position, _origCamPosition, t/2);
+            Camera.main.transform.rotation = Quaternion.Slerp(_intro.transform.GetChild(1).rotation, _origCamRotation, t/2);
             yield return null;
         }
         
@@ -216,8 +216,8 @@ public class GameManager: MonoBehaviour
         while (t<2)
         {
             t += Time.deltaTime;
-            Camera.main.transform.position = Vector3.Lerp(_origCamPosition, _outro.transform.GetChild(4).position, t*2);
-            Camera.main.transform.rotation = Quaternion.Slerp(_origCamRotation, _outro.transform.GetChild(4).rotation, t*2);
+            Camera.main.transform.position = Vector3.Lerp(_origCamPosition, _outro.transform.GetChild(4).position, t/2);
+            Camera.main.transform.rotation = Quaternion.Slerp(_origCamRotation, _outro.transform.GetChild(4).rotation, t/2);
             yield return null;
         }
 
