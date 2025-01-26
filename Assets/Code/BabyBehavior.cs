@@ -138,7 +138,7 @@ public class BabyBehavior : MonoBehaviour
                 if (closestBaby != null)
                 {
                     ChangeState(BabyState.Fighting);
-                    GameManager.instance.SetGameEndCondition();
+                    GameManager.Instance.SetGameEndCondition();
                     StartCoroutine(BabyBrawlRoutine(closestBaby));
                 }
 
@@ -247,6 +247,7 @@ public class BabyBehavior : MonoBehaviour
                 _foamParticles.ForEach(go => go.SetActive(true));
                 _skinnedRenderer.SetBlendShapeWeight(0, 100);
                 _skinnedRenderer.materials[3].SetColor("_Emission", Color.red);
+                SoundManager.Instance.PlaySound("baby_growl_short");
                 break;
             case BabyState.NeedMet:
                 Debug.Log("changed to needs met!");

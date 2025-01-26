@@ -924,6 +924,7 @@ MonoBehaviour:
   _skinnedRenderer: {fileID: 6005051901570712607}
   _foamParticles: []
   _animator: {fileID: 6473638118166592547}
+  soundManager: {fileID: 4192595065866276326, guid: e2406fd53f58cfb488950838956dce27, type: 3}
   _fightRunSpeed: 6
 --- !u!114 &2928653592997361897
 MonoBehaviour:
@@ -940,6 +941,7 @@ MonoBehaviour:
   _speed: 3
   _rotationSpeed: 250
   _wallCheckDist: 3
+  soundManager: {fileID: 4192595065866276326, guid: e2406fd53f58cfb488950838956dce27, type: 3}
 --- !u!120 &2944882900309732160
 LineRenderer:
   serializedVersion: 2
@@ -1850,15 +1852,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -241416739695334566, guid: 54efa7b2a3b4d446981911b0f230c6be, type: 3}
     - target: {fileID: -2600172534127671891, guid: e5fdc168e621f498cb49a13e17327f62, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
+      propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 89ca35d620d514db489a92da13d0f15c, type: 2}
     - target: {fileID: -2600172534127671891, guid: e5fdc168e621f498cb49a13e17327f62, type: 3}
-      propertyPath: 'm_Materials.Array.data[1]'
+      propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: 13685e01ae71344168f3d1bc17af918a, type: 2}
     - target: {fileID: -2600172534127671891, guid: e5fdc168e621f498cb49a13e17327f62, type: 3}
-      propertyPath: 'm_Materials.Array.data[3]'
+      propertyPath: m_Materials.Array.data[3]
       value: 
       objectReference: {fileID: 2100000, guid: bfd11a29b3a98459da3c7e4010268c49, type: 2}
     - target: {fileID: -2084811680363313996, guid: e5fdc168e621f498cb49a13e17327f62, type: 3}

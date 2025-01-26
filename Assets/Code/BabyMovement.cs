@@ -45,17 +45,26 @@ public class BabyMovement : MonoBehaviour
 		{
 			if (Input.GetMouseButton(0) && _drawing)
 			{
+				if (!SoundManager.Instance.IsSoundPlaying("pencil_writing"))
+					SoundManager.Instance.PlaySound("pencil_writing");
+				
 				Vector3 worldPos = GetMouseWorldPosition("Floor");
 				if (worldPos != Vector3.zero)
 					AddPathPoint(worldPos);
 				else
+				{
 					_drawing = false;
+					SoundManager.Instance.StopSound("pencil_writing");
+				}
 			}
-			else if (Input.GetMouseButtonUp(0)) 
+			else if (Input.GetMouseButtonUp(0))
+			{
 				_drawing = false;
+				SoundManager.Instance.StopSound("pencil_writing");
+			}
 			else if (_linePoints.Count <= 1)
 				ChangeState(MovementState.FREE);
-
+			
 			MoveOnPath();
 		}
 		else if (_state == MovementState.FREE)

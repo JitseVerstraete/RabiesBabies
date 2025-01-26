@@ -20,7 +20,7 @@ public class SoundManager : MonoBehaviour
     private readonly float _speedUpRate = 0.01f;
     private readonly float _maxPitch = 1.5f;
     
-    private void Awake()
+    private void Start()
     {
         // Singleton setup
         if (Instance == null)
@@ -44,10 +44,7 @@ public class SoundManager : MonoBehaviour
 
             audioSources[sound.name] = audioSource;
         }
-    }
-
-    private void Start()
-    {
+        
         PlaySound("backgroundMusic");
     }
     
@@ -110,5 +107,11 @@ public class SoundManager : MonoBehaviour
     {
         var audioSource = GetAudioSource(soundName);
         audioSource.pitch = 1f;
+    }
+
+    public bool IsSoundPlaying(string soundName)
+    {
+        var audioSource = GetAudioSource(soundName);
+        return audioSource != null && audioSource.isPlaying;
     }
 }

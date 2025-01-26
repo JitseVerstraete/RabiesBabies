@@ -1287,6 +1287,10 @@ PrefabInstance:
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 1577511690}
+    - target: {fileID: 157129737298194, guid: ff661b291b798c943976de20806f2b2b, type: 3}
+      propertyPath: soundManager
+      value: 
+      objectReference: {fileID: 3012339288827384317}
     - target: {fileID: 180107164917809747, guid: ff661b291b798c943976de20806f2b2b, type: 3}
       propertyPath: m_Name
       value: Canvas
