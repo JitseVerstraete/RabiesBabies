@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CanvasButtons : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class CanvasButtons : MonoBehaviour
 
     public void GoToMainMenuButton()
     {
-        GameManager.Instance.ChangeState(GameState.MainMenu);
+        SceneManager.LoadScene(0);
+        // GameManager.Instance.ChangeState(GameState.MainMenu);
     }
 }

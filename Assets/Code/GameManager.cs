@@ -21,6 +21,9 @@ public class GameManager: MonoBehaviour
     [SerializeField] private TMP_Text _timerText;
     [SerializeField] private TMP_Text _endText;
     [SerializeField] private GameObject _intro;
+    [SerializeField] private GameObject _outro;
+    [SerializeField] private TMP_Text _endDaysText;
+    [SerializeField] private TMP_Text _scoreText;
     
     [SerializeField] private float _gameEndDuration = 5f;
     public GameObject mainMenu;
@@ -43,7 +46,6 @@ public class GameManager: MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -145,7 +147,7 @@ public class GameManager: MonoBehaviour
                 Debug.Log("End Game");
                 var minutes = Mathf.FloorToInt(gameTime / 60);
                 var seconds = Mathf.FloorToInt(gameTime % 60);
-                _endText.text = $"{minutes:00}:{seconds:00} without an accident!";
+                StartCoroutine(SickOutroAnimation($"You survived baby hell {minutes:00}:{seconds:00} without an accident!"));
                 break;
         }
         _currentState = newState;
@@ -183,6 +185,25 @@ public class GameManager: MonoBehaviour
         // spawn fix first baby
         babySpawner.SetCanSpawn(true);
         babySpawner.Spawn(_intro.transform.GetChild(2));
+    }
+    
+    private IEnumerator SickOutroAnimation(string result)
+    {
+        FindFirstObjectByType<SecurityScreens>().gameObject.SetActive(false);
+
+        float t = 0;
+        while (t<2)
+        {
+            t += Time.deltaTime;
+            Camera.main.transform.position = Vector3.Lerp(_origCamPosition, _outro.transform.GetChild(4).position, t*2);
+            Camera.main.transform.rotation = Quaternion.Slerp(_origCamRotation, _outro.transform.GetChild(4).rotation, t*2);
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(1f);
+        _endDaysText.text = "0 DAYS(S)";
+        yield return new WaitForSeconds(1f);
+        _scoreText.text = result;
     }
     
     private void DestroyAllObjectsSafely(GameObject[] objects)
