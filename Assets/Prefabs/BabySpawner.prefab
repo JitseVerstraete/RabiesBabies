@@ -390,8 +390,8 @@ MonoBehaviour:
   - {fileID: 6061056179109268207}
   - {fileID: 7016136586194747270}
   startSpawnPoint: {fileID: 0}
-  spawnInterval: 7
-  maxObjects: 10
+  spawnInterval: 10
+  maxObjects: 50
   colors:
   - {r: 0.990566, g: 0.1448469, b: 0.1448469, a: 1}
   - {r: 0.10849059, g: 0.34719014, b: 1, a: 1}
