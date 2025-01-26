@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public enum GameState
 {
+    Start,
     MainMenu,
     PauseMenu,
     Playing,
@@ -19,6 +20,7 @@ public class GameManager: MonoBehaviour
     private GameState _currentState;
     [SerializeField] private TMP_Text _timerText;
     [SerializeField] private TMP_Text _endText;
+    [SerializeField] private GameObject _intro;
     
     [SerializeField] private float _gameEndDuration = 5f;
     public GameObject mainMenu;
@@ -28,6 +30,8 @@ public class GameManager: MonoBehaviour
     public GameObject faceCamsUI;
 
     private bool _gameEndConditionReached = false;
+    private Vector3 _origCamPosition;
+    private Quaternion _origCamRotation;
     
     public BabySpawner babySpawner;
     
@@ -47,7 +51,7 @@ public class GameManager: MonoBehaviour
             return;
         }
         
-        _currentState = GameState.MainMenu;
+        ChangeState(GameState.MainMenu);
         mainMenu.SetActive(true);
     }
     
@@ -113,8 +117,16 @@ public class GameManager: MonoBehaviour
                 SoundManager.Instance.StopAllSounds();
                 SoundManager.Instance.PlaySound("backgroundMusic");
                 babySpawner.ResetSpawner();
-                FindFirstObjectByType<SecurityScreens>().Reset();
+                FindFirstObjectByType<SecurityScreens>()?.Reset();
                 DestroyAllObjectsSafely(GameObject.FindGameObjectsWithTag("FightCloud"));
+                
+                // set up intro baby
+                _intro.SetActive(true);
+                _intro.GetComponentInChildren<Animator>().SetTrigger("sit");
+                _origCamPosition = Camera.main.transform.position;
+                _origCamRotation = Camera.main.transform.rotation;
+                Camera.main.transform.position = _intro.transform.GetChild(1).position;
+                Camera.main.transform.rotation = _intro.transform.GetChild(1).rotation;
                 break;
             case GameState.PauseMenu:
                 Debug.Log("Pause Menu");
@@ -123,7 +135,7 @@ public class GameManager: MonoBehaviour
                 break;
             case GameState.Playing:
                 Debug.Log("Playing Game");
-                babySpawner.SetCanSpawn(true);
+                StartCoroutine(SickIntroAnimation());
                 break;
             case GameState.Ending:
                 Debug.Log("Ending Game");
@@ -137,6 +149,40 @@ public class GameManager: MonoBehaviour
                 break;
         }
         _currentState = newState;
+    }
+
+    private IEnumerator SickIntroAnimation()
+    {
+        // RABID!!
+        float t = 0;
+        while (t<1)
+        {
+            t += Time.deltaTime;
+            _intro.GetComponentInChildren<SkinnedMeshRenderer>().SetBlendShapeWeight(0, t * 100);
+            _intro.GetComponentInChildren<SkinnedMeshRenderer>().materials[3].SetColor("_Emission", Color.Lerp(Color.white, Color.red, t));
+            yield return null;
+        }
+
+        // todo play sound
+        SoundManager.Instance.PlaySound("baby_growl_short");
+        
+        yield return new WaitForSeconds(1f);
+        FindFirstObjectByType<SecurityScreens>(FindObjectsInactive.Include).gameObject.SetActive(true);
+
+        t = 0;
+        while (t<2)
+        {
+            t += Time.deltaTime;
+            Camera.main.transform.position = Vector3.Lerp(_intro.transform.GetChild(1).position, _origCamPosition, t*2);
+            Camera.main.transform.rotation = Quaternion.Slerp(_intro.transform.GetChild(1).rotation, _origCamRotation, t*2);
+            yield return null;
+        }
+        
+        _intro.SetActive(false);
+        
+        // spawn fix first baby
+        babySpawner.SetCanSpawn(true);
+        babySpawner.Spawn(_intro.transform.GetChild(2));
     }
     
     private void DestroyAllObjectsSafely(GameObject[] objects)

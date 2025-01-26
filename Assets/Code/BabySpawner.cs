@@ -14,6 +14,7 @@ public class BabySpawner : MonoBehaviour
 
     [SerializeField] private Transform _launchOrigin;
     [SerializeField] private List<Transform> spawnPoints;
+    [SerializeField] private Transform startSpawnPoint;
     [SerializeField] private float spawnInterval = 2.0f;
     [SerializeField] private int maxObjects = 10;
     [SerializeField] private List<Color> colors;
@@ -70,14 +71,19 @@ public class BabySpawner : MonoBehaviour
         int randomIndex = Random.Range(0, spawnPoints.Count);
         Transform spawnPoint = spawnPoints[randomIndex];
 
+        Spawn(spawnPoint);
+        
+        yield return null;
+    }
+
+    public void Spawn(Transform spawnPoint)
+    {
         GameObject spawnedObject = Instantiate(_objectToSpawn, spawnPoint.position, spawnPoint.rotation);
         BabyBehavior behavior = spawnedObject.GetComponent<BabyBehavior>();
         behavior.Init(colors[_babyCounter++ % colors.Count]);
         _spawnedBabys.Add(behavior);
 
         FindFirstObjectByType<SecurityScreens>().AddBaby(behavior);
-        
-        yield return null;
     }
 
     public void ResetSpawner()

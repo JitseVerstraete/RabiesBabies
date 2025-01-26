@@ -20,7 +20,7 @@ public class SoundManager : MonoBehaviour
     private readonly float _speedUpRate = 0.01f;
     private readonly float _maxPitch = 1.5f;
     
-    private void Start()
+    private void Awake()
     {
         // Singleton setup
         if (Instance == null)

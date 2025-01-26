@@ -440,10 +440,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 5899183499687541552}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 50, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 49.336723, y: -11.25}
+  m_SizeDelta: {x: 41.5531, y: 22.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5445306185750598959
 CanvasRenderer:
@@ -502,17 +502,17 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 19.9
+  m_fontSize: 16
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontSizeMin: 14
+  m_fontSizeMax: 78.5
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: -4.88
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -557,7 +557,6 @@ GameObject:
   - component: {fileID: 7714403061285063929}
   - component: {fileID: 3899918360532537136}
   - component: {fileID: 4843672035322769903}
-  - component: {fileID: 6170472324039804837}
   m_Layer: 0
   m_Name: TV-wall
   m_TagString: Untagged
@@ -622,25 +621,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6170472324039804837
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1364889070923700071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da6f2a7e925e429997801b2c12442cdc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _screens:
-  - {fileID: 5985826111738351854}
-  - {fileID: 3138622239496035377}
-  - {fileID: 6910841111610932978}
-  - {fileID: 6696736984270267991}
-  - {fileID: 5024530204167424403}
-  _staticTexture: {fileID: 2800000, guid: 8fb894b8b8bfc4d589d95bb968f6546b, type: 3}
 --- !u!1 &1410490879532396772
 GameObject:
   m_ObjectHideFlags: 0
@@ -1488,7 +1468,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0.025925994, y: 84.7}
-  m_SizeDelta: {x: 100, y: 30}
+  m_SizeDelta: {x: 75, y: 22.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6632899365157816457
 MonoBehaviour:
@@ -1719,10 +1699,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 5899183499687541552}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 30, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 14.336724, y: -11.25}
+  m_SizeDelta: {x: 18.9, y: 22.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2704544604457591950
 CanvasRenderer:
@@ -1754,7 +1734,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 40bed6554a5b8244b955a2027f8bee13, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -1771,6 +1751,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3026288311895749557}
+  - component: {fileID: 1457912551241833910}
   m_Layer: 5
   m_Name: FaceCams (1)
   m_TagString: Untagged
@@ -1803,6 +1784,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 46}
   m_Pivot: {x: 0.5, y: 0}
+--- !u!114 &1457912551241833910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5924189108459758699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da6f2a7e925e429997801b2c12442cdc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _screens:
+  - {fileID: 5985826111738351854}
+  - {fileID: 3138622239496035377}
+  - {fileID: 6910841111610932978}
+  - {fileID: 6696736984270267991}
+  - {fileID: 5024530204167424403}
+  _staticTexture: {fileID: 2800000, guid: 8fb894b8b8bfc4d589d95bb968f6546b, type: 3}
 --- !u!1 &6100162154770218462
 GameObject:
   m_ObjectHideFlags: 0
@@ -2988,7 +2988,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2432980748389564878
 RectTransform:
   m_ObjectHideFlags: 0
