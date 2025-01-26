@@ -40,11 +40,11 @@ namespace Code
 					BabyBehavior toShowBaby = notShownBabies[Random.Range(0, notShownBabies.Count - 1)];
 					int toHideBabyIndex = Random.Range(0, _shownBabies.Count - 1);
 					BabyBehavior toHideBaby = _shownBabies[toHideBabyIndex];
-
+					
+					_shownBabies[toHideBabyIndex] = toShowBaby;
 					_screens[toHideBabyIndex].texture = _staticTexture;
 					yield return new WaitForSeconds(0.25f);
 					_screens[toHideBabyIndex].texture = toShowBaby.RenderTexture;
-					_shownBabies[toHideBabyIndex] = toShowBaby;
 				}
 			}
 			
