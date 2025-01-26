@@ -110,6 +110,8 @@ public class GameManager: MonoBehaviour
                 Debug.Log("Main Menu");
                 gameTime = 0f;
                 SoundManager.Instance.ResetSpeed("backgroundMusic");
+                SoundManager.Instance.StopAllSounds();
+                SoundManager.Instance.PlaySound("backgroundMusic");
                 babySpawner.ResetSpawner();
                 FindFirstObjectByType<SecurityScreens>().Reset();
                 DestroyAllObjectsSafely(GameObject.FindGameObjectsWithTag("FightCloud"));

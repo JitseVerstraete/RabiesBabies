@@ -226,6 +226,7 @@ public class BabyBehavior : MonoBehaviour
                 SetNeed(GetRandomNeed(_currentNeed));
                 break;
             case BabyState.Fighting:
+                SoundManager.Instance.PlaySound("fight");
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -260,6 +261,7 @@ public class BabyBehavior : MonoBehaviour
                 _needMetTimer = 0f;
                 break;
             case BabyState.Fighting:
+                SoundManager.Instance.PlaySound("fight");
                 break;
         }
 

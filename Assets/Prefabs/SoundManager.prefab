@@ -86,6 +86,10 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 4c4652833a54b0b48b5ac793f10ccb91, type: 3}
     loop: 0
     volume: 1
+  - name: fight
+    clip: {fileID: 8300000, guid: e7d32db5bb998ed46a5115573f6d37c5, type: 3}
+    loop: 0
+    volume: 1
 --- !u!81 &4912158690874052366
 AudioListener:
   m_ObjectHideFlags: 0
