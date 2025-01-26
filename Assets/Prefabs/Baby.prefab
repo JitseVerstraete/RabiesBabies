@@ -302,7 +302,7 @@ Transform:
   m_GameObject: {fileID: 1829704152661595078}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.498, z: 0.032}
+  m_LocalPosition: {x: 0, y: 0.498, z: 0.31}
   m_LocalScale: {x: 1.1437281, y: 1.1437281, z: 1.1437281}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -327,7 +327,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.8
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2758320744970074150
 GameObject:
@@ -1048,6 +1048,7 @@ MonoBehaviour:
   _gracePeriod: 6
   _rabidWarningTime: 1.5
   _needMetDuration: 10
+  _invincibilityDuration: 2
   _fightRadius: 2
   _fightMargin: 0.5
   _dangerRadiusLine: {fileID: 4490940819712677683}
@@ -1063,7 +1064,6 @@ MonoBehaviour:
   _skinnedRenderer: {fileID: 6005051901570712607}
   _foamParticles: []
   _animator: {fileID: 6473638118166592547}
-  soundManager: {fileID: 4192595065866276326, guid: e2406fd53f58cfb488950838956dce27, type: 3}
   _fightRunSpeed: 6
 --- !u!114 &2928653592997361897
 MonoBehaviour:
@@ -1080,7 +1080,6 @@ MonoBehaviour:
   _speed: 3
   _rotationSpeed: 250
   _wallCheckDist: 3
-  soundManager: {fileID: 4192595065866276326, guid: e2406fd53f58cfb488950838956dce27, type: 3}
   _pathLineRenderer: {fileID: 9071550426299225969}
 --- !u!54 &38372870482891278
 Rigidbody:
@@ -1885,15 +1884,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -241416739695334566, guid: 54efa7b2a3b4d446981911b0f230c6be, type: 3}
     - target: {fileID: -2600172534127671891, guid: e5fdc168e621f498cb49a13e17327f62, type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 89ca35d620d514db489a92da13d0f15c, type: 2}
     - target: {fileID: -2600172534127671891, guid: e5fdc168e621f498cb49a13e17327f62, type: 3}
-      propertyPath: m_Materials.Array.data[1]
+      propertyPath: 'm_Materials.Array.data[1]'
       value: 
       objectReference: {fileID: 2100000, guid: 13685e01ae71344168f3d1bc17af918a, type: 2}
     - target: {fileID: -2600172534127671891, guid: e5fdc168e621f498cb49a13e17327f62, type: 3}
-      propertyPath: m_Materials.Array.data[3]
+      propertyPath: 'm_Materials.Array.data[3]'
       value: 
       objectReference: {fileID: 2100000, guid: bfd11a29b3a98459da3c7e4010268c49, type: 2}
     - target: {fileID: -2084811680363313996, guid: e5fdc168e621f498cb49a13e17327f62, type: 3}
