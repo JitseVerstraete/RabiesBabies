@@ -867,17 +867,6 @@ Light:
   m_LightUnit: 1
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
---- !u!114 &1577511690 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2410821905452090061, guid: 9692d3b0656a1444c9b1a964922a445e, type: 3}
-  m_PrefabInstance: {fileID: 1367906604}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17e46ce7408bf1449ae4471e2d8c7549, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1697817862 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4744639440213450929, guid: ff661b291b798c943976de20806f2b2b, type: 3}
@@ -1283,14 +1272,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 157129737298194, guid: ff661b291b798c943976de20806f2b2b, type: 3}
-      propertyPath: gameManager
-      value: 
-      objectReference: {fileID: 1577511690}
-    - target: {fileID: 157129737298194, guid: ff661b291b798c943976de20806f2b2b, type: 3}
-      propertyPath: soundManager
-      value: 
-      objectReference: {fileID: 3012339288827384317}
     - target: {fileID: 180107164917809747, guid: ff661b291b798c943976de20806f2b2b, type: 3}
       propertyPath: m_Name
       value: Canvas
