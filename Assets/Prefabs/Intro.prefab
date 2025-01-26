@@ -238,6 +238,14 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6005051901570712607, guid: 4434b0de668c24e7c8b1a2d345f66ceb, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6005051901570712607, guid: 4434b0de668c24e7c8b1a2d345f66ceb, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 362d2f22a9c9f4d0e844dddf1a758162, type: 2}
     - target: {fileID: 6055451703256728989, guid: 4434b0de668c24e7c8b1a2d345f66ceb, type: 3}
       propertyPath: m_Name
       value: StarterBaby
