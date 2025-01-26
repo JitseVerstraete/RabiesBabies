@@ -151,6 +151,8 @@ public class GameManager: MonoBehaviour
                 break;
             case GameState.EndGame:
                 Debug.Log("End Game");
+                SoundManager.Instance.StopAllSounds();
+                SoundManager.Instance.PlaySound("backgroundMusic");
                 var minutes = Mathf.FloorToInt(gameTime / 60);
                 var seconds = Mathf.FloorToInt(gameTime % 60);
                 StartCoroutine(SickOutroAnimation($"You survived baby hell {minutes:00}:{seconds:00} without an accident!"));

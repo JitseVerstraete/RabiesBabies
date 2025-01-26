@@ -49,13 +49,13 @@ MonoBehaviour:
   - name: pencil_writing
     clip: {fileID: 8300000, guid: b3b4f21388090fa46bb0cd7f4db0d419, type: 3}
     loop: 1
-    volume: 1
+    volume: 0.65
   - name: pooping
     clip: {fileID: 8300000, guid: a062a2647ff98fc42979d4c79efbd7e2, type: 3}
     loop: 0
     volume: 1
   - name: cannon_shot
-    clip: {fileID: 8300000, guid: 6a72c976d91e0be47aeec88656b49df0, type: 3}
+    clip: {fileID: 8300000, guid: 25144acfb0a174c98877ded0e961abf0, type: 3}
     loop: 0
     volume: 1
   - name: fall_ground
@@ -65,27 +65,27 @@ MonoBehaviour:
   - name: eating
     clip: {fileID: 8300000, guid: d3a21d5b50c4ca743a8ae712a7a84397, type: 3}
     loop: 0
-    volume: 1
+    volume: 0.81
   - name: ambulance
     clip: {fileID: 8300000, guid: 34ff0f4487c039b4ba195f792ab16de3, type: 3}
     loop: 0
-    volume: 1
+    volume: 0.75
   - name: baby_growl_long
     clip: {fileID: 8300000, guid: 2762e3330dc25a64d9bd7e028b72217f, type: 3}
     loop: 0
-    volume: 1
+    volume: 0.854
   - name: baby_growl_short
     clip: {fileID: 8300000, guid: 795f62e5a295de441a17c4191c76e6fd, type: 3}
     loop: 0
-    volume: 1
+    volume: 0.854
   - name: backgroundMusic
     clip: {fileID: 8300000, guid: 9e50f4d00b66537489b32fe06de7e3eb, type: 3}
     loop: 1
-    volume: 0.513
+    volume: 0.45
   - name: playing_sand
     clip: {fileID: 8300000, guid: 4c4652833a54b0b48b5ac793f10ccb91, type: 3}
     loop: 0
-    volume: 1
+    volume: 0.8
   - name: fight
     clip: {fileID: 8300000, guid: e7d32db5bb998ed46a5115573f6d37c5, type: 3}
     loop: 0

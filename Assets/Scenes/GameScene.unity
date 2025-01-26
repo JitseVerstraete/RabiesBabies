@@ -1371,14 +1371,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoundManager
       objectReference: {fileID: 0}
-    - target: {fileID: 4192595065866276326, guid: e2406fd53f58cfb488950838956dce27, type: 3}
-      propertyPath: sounds.Array.data[2].clip
-      value: 
-      objectReference: {fileID: 8300000, guid: 25144acfb0a174c98877ded0e961abf0, type: 3}
-    - target: {fileID: 4192595065866276326, guid: e2406fd53f58cfb488950838956dce27, type: 3}
-      propertyPath: sounds.Array.data[2].volume
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1477,6 +1469,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 811977055760167567, guid: ff661b291b798c943976de20806f2b2b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 811977055760167567, guid: ff661b291b798c943976de20806f2b2b, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 811977055760167567, guid: ff661b291b798c943976de20806f2b2b, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 811977055760167567, guid: ff661b291b798c943976de20806f2b2b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 811977055760167567, guid: ff661b291b798c943976de20806f2b2b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5452671831213052025, guid: ff661b291b798c943976de20806f2b2b, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1555,6 +1567,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5452671831213052025, guid: ff661b291b798c943976de20806f2b2b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6956411499257688659, guid: ff661b291b798c943976de20806f2b2b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6956411499257688659, guid: ff661b291b798c943976de20806f2b2b, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6956411499257688659, guid: ff661b291b798c943976de20806f2b2b, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6956411499257688659, guid: ff661b291b798c943976de20806f2b2b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6956411499257688659, guid: ff661b291b798c943976de20806f2b2b, type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -82,6 +82,7 @@ public class BabySpawner : MonoBehaviour
     private IEnumerator SpawnAtRandomPoint()
     {
         //roll up ambulance
+        SoundManager.Instance.PlaySound("ambulance");
         float ambulanceMoveTimer = 0f;
         while (ambulanceMoveTimer < _ambulanceMoveDuration)
         {
@@ -90,7 +91,7 @@ public class BabySpawner : MonoBehaviour
             _ambulance.transform.position = Vector3.Lerp(_ambulanceHiddenPos.position, _ambulanceShownPos.position, ambulanceMoveTimer / _ambulanceMoveDuration);
             yield return null;
         }
-
+        SoundManager.Instance.StopSound("ambulance");
 
         SoundManager.Instance.PlaySound("cannon_shot");
         _launchParticles.Play();
