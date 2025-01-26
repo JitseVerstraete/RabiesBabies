@@ -419,7 +419,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _minScale: 0
-  _maxScale: 1
+  _maxScale: 0.7
   _opacityCurve:
     serializedVersion: 2
     m_Curve:
@@ -489,6 +489,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03f5ed7688a534550b98d82c5147a143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _speed: 30
 --- !u!1 &7640262928744331781
 GameObject:
   m_ObjectHideFlags: 0
