@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Code;
 using UnityEngine;
+using UnityEngine.Animations;
 using UnityEngine.UI;
 
 public class BabySpawner : MonoBehaviour
@@ -128,22 +129,26 @@ public class BabySpawner : MonoBehaviour
         GameObject spawnedObject = Instantiate(_objectToSpawn, _launchOrigin.position, _launchOrigin.rotation);
         BabyBehavior behavior = spawnedObject.GetComponent<BabyBehavior>();
         behavior.PreInit(colors[_babyCounter++ % colors.Count]);
-
+        
+        Vector3 startPos = _launchOrigin.position;
+        Quaternion startRot = _launchOrigin.rotation;
 
         yield return new WaitForSeconds(0.4f);
         StartCoroutine(RollBackAmbulance());
         _launchParticles.Play();
         
+        
+        
         float animTimer = 0f;
         while (animTimer < _animationDuration)
         {
-            animTimer += Time.deltaTime;
-            float vertical = _animHeight * Mathf.Lerp(_launchOrigin.position.y, targetPoint.y, animTimer / _animationDuration);
-            Vector3 mainMovement = Vector3.Lerp(_launchOrigin.position, targetPoint, _horizontalCurve.Evaluate(animTimer / _animationDuration));
+            float vertical = _animHeight * Mathf.Lerp(0, _animHeight,  _verticalCurve.Evaluate(animTimer / _animationDuration));
+            Vector3 mainMovement = Vector3.Lerp(startPos, targetPoint, _horizontalCurve.Evaluate(animTimer / _animationDuration));
             spawnedObject.transform.position = mainMovement + new Vector3(0f, vertical, 0f);
-            spawnedObject.transform.rotation = Quaternion.Slerp(_launchOrigin.rotation, Quaternion.LookRotation(Vector3.left, Vector3.up) , animTimer / _animationDuration);
+            spawnedObject.transform.rotation = Quaternion.Slerp(startRot, Quaternion.LookRotation(Vector3.left, Vector3.up) , animTimer / _animationDuration);
             spawnedObject.transform.localScale = Vector3.Lerp(new Vector3(0.9f, 0.9f, 0.9f), Vector3.one, animTimer / _animationDuration);
 
+            animTimer += Time.deltaTime;
             yield return null;
         }
         
