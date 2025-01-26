@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Code;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -149,7 +150,7 @@ public class BabyBehavior : MonoBehaviour
                 if (closestBaby != null)
                 {
                     ChangeState(BabyState.Fighting);
-                    GameManager.instance.SetGameEndCondition();
+                    GameManager.Instance.SetGameEndCondition();
                     StartCoroutine(BabyBrawlRoutine(closestBaby));
                 }
 
@@ -240,6 +241,7 @@ public class BabyBehavior : MonoBehaviour
                 SetNeed(GetRandomNeed(_currentNeed));
                 break;
             case BabyState.Fighting:
+                SoundManager.Instance.PlaySound("fight");
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -264,6 +266,7 @@ public class BabyBehavior : MonoBehaviour
                 _foamParticles.ForEach(go => go.SetActive(true));
                 _skinnedRenderer.SetBlendShapeWeight(0, 100);
                 _skinnedRenderer.materials[3].SetColor("_Emission", Color.red);
+                SoundManager.Instance.PlaySound("baby_growl_short");
                 break;
             case BabyState.NeedMet:
                 Debug.Log("changed to needs met!");
@@ -276,6 +279,7 @@ public class BabyBehavior : MonoBehaviour
                 _needMetTimer = 0f;
                 break;
             case BabyState.Fighting:
+                SoundManager.Instance.PlaySound("fight");
                 break;
         }
 
@@ -396,6 +400,8 @@ public class BabyBehavior : MonoBehaviour
             _linkedFightCloud = spawnedCloud;
             Debug.Log("spawning new fight cloud!");
         }
+        
+        FindFirstObjectByType<SecurityScreens>().RemoveBaby(this);
     }
 
     private bool IsInLayerMask(GameObject obj, LayerMask layerMask)

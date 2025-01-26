@@ -71,6 +71,7 @@ public class NeedStation : MonoBehaviour
             _heldBabies[slot] = baby;
             baby.transform.position = targetTransform.position;
             baby.transform.rotation = targetTransform.rotation;
+            PlayNeedSound();
         }
     }
 
@@ -85,5 +86,21 @@ public class NeedStation : MonoBehaviour
             Physics.Raycast(transform.position + new Vector3(0f, 100f, 0f), Vector3.down, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Floor"));
             baby.transform.position = hit.point;
         }
-    }       
+    }
+
+    private void PlayNeedSound()
+    {
+        switch (_fulfillsNeed)
+        {
+            case BabyNeed.Bored:
+                SoundManager.Instance.PlaySound("playing_sand");
+                break;
+            case BabyNeed.Diaper:
+                SoundManager.Instance.PlaySound("pooping");
+                break;
+            case BabyNeed.Hungry:
+                SoundManager.Instance.PlaySound("eating");
+                break;
+            }
+    }
 }

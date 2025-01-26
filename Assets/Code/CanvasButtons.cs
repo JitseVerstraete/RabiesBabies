@@ -2,11 +2,9 @@ using UnityEngine;
 
 public class CanvasButtons : MonoBehaviour
 {
-    public GameManager gameManager;
-
     public void StartGameButton()
     {
-        gameManager.ChangeState(GameState.Playing);
+        GameManager.Instance.ChangeState(GameState.Playing);
     }
 
     public void ExitGameButton()
@@ -16,6 +14,6 @@ public class CanvasButtons : MonoBehaviour
 
     public void GoToMainMenuButton()
     {
-        gameManager.ChangeState(GameState.MainMenu);
+        GameManager.Instance.ChangeState(GameState.MainMenu);
     }
 }

@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sounds:
   - name: pencil_writing
-    clip: {fileID: 8300000, guid: 5026b7d2bed2c684380bd66f8d716f77, type: 3}
+    clip: {fileID: 8300000, guid: b3b4f21388090fa46bb0cd7f4db0d419, type: 3}
     loop: 1
     volume: 1
   - name: pooping
@@ -81,6 +81,14 @@ MonoBehaviour:
   - name: backgroundMusic
     clip: {fileID: 8300000, guid: 9e50f4d00b66537489b32fe06de7e3eb, type: 3}
     loop: 1
+    volume: 0.513
+  - name: playing_sand
+    clip: {fileID: 8300000, guid: 4c4652833a54b0b48b5ac793f10ccb91, type: 3}
+    loop: 0
+    volume: 1
+  - name: fight
+    clip: {fileID: 8300000, guid: e7d32db5bb998ed46a5115573f6d37c5, type: 3}
+    loop: 0
     volume: 1
 --- !u!81 &4912158690874052366
 AudioListener:

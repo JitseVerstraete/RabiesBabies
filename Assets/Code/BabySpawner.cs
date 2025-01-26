@@ -18,8 +18,6 @@ public class BabySpawner : MonoBehaviour
     [SerializeField] private int maxObjects = 10;
     [SerializeField] private List<Color> colors;
     
-    public SoundManager soundManager;
-
     private bool _canSpawn = false;
 
     private List<BabyBehavior> _spawnedBabys = new List<BabyBehavior>();
@@ -61,7 +59,7 @@ public class BabySpawner : MonoBehaviour
             yield return new WaitForSeconds(spawnInterval);
             if (_spawnedBabys.Count < maxObjects && _canSpawn)
             {
-                soundManager.SpeedUpMusic("backgroundMusic");
+                SoundManager.Instance.SpeedUpMusic("backgroundMusic");
                 StartCoroutine(SpawnAtRandomPoint());
             }
         }

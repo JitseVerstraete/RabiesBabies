@@ -15,8 +15,7 @@ public enum GameState
 
 public class GameManager: MonoBehaviour
 {
-    private static GameManager _instance;
-    public static GameManager instance { get { return _instance; } }
+    public static GameManager Instance;
     private GameState _currentState;
     [SerializeField] private TMP_Text _timerText;
     [SerializeField] private TMP_Text _endText;
@@ -31,24 +30,15 @@ public class GameManager: MonoBehaviour
     private bool _gameEndConditionReached = false;
     
     public BabySpawner babySpawner;
-    public SoundManager soundManager;
-    
     
     public float gameTime { get; set; }
 
     public void Start()
     {
-        _instance = this;
-        _currentState = GameState.MainMenu;
-        mainMenu.SetActive(true);
-    }
-
-    private void Awake()
-    {
         // Singleton setup
-        if (_instance == null)
+        if (Instance == null)
         {
-            _instance = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -56,11 +46,14 @@ public class GameManager: MonoBehaviour
             Destroy(gameObject);
             return;
         }
+        
+        _currentState = GameState.MainMenu;
+        mainMenu.SetActive(true);
     }
     
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && _currentState == GameState.Playing)
         {
             ChangeState(GameState.PauseMenu);
         }
@@ -109,14 +102,16 @@ public class GameManager: MonoBehaviour
         pauseMenu.SetActive(newState == GameState.PauseMenu);
         gameOverMenu.SetActive(newState == GameState.EndGame);
         
-        soundManager.ResumeSound("backgroundMusic");
+        SoundManager.Instance.ResumeSound("backgroundMusic");
         
         switch (newState)
         {
             case GameState.MainMenu:
                 Debug.Log("Main Menu");
                 gameTime = 0f;
-                soundManager.ResetSpeed("backgroundMusic");
+                SoundManager.Instance.ResetSpeed("backgroundMusic");
+                SoundManager.Instance.StopAllSounds();
+                SoundManager.Instance.PlaySound("backgroundMusic");
                 babySpawner.ResetSpawner();
                 FindFirstObjectByType<SecurityScreens>().Reset();
                 DestroyAllObjectsSafely(GameObject.FindGameObjectsWithTag("FightCloud"));
@@ -124,7 +119,7 @@ public class GameManager: MonoBehaviour
             case GameState.PauseMenu:
                 Debug.Log("Pause Menu");
                 babySpawner.SetCanSpawn(false);
-                soundManager.PauseSound("backgroundMusic");
+                SoundManager.Instance.PauseSound("backgroundMusic");
                 break;
             case GameState.Playing:
                 Debug.Log("Playing Game");
