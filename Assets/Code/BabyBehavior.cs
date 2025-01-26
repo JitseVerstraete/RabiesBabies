@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public enum BabyState
 {
+    Invincible,
     Neutral,
     RabidWarning,
     Rabid,
@@ -26,6 +27,8 @@ public class BabyBehavior : MonoBehaviour
     [SerializeField] private float _gracePeriod = 8f;
     [SerializeField] private float _rabidWarningTime = 3f;
     [SerializeField] private float _needMetDuration = 10f;
+    [SerializeField] private float _invincibilityDuration = 2f;
+    private float _invincibilityTimer = 0;
     [SerializeField] private float _fightRadius = 2f;
     [SerializeField] private float _fightMargin = 0.5f;
     [SerializeField] private LineRenderer _dangerRadiusLine = null;
@@ -99,6 +102,14 @@ public class BabyBehavior : MonoBehaviour
     {
         switch (_currentState)
         {
+            case BabyState.Invincible:
+                _invincibilityTimer += Time.deltaTime;
+                if (_invincibilityTimer >= _invincibilityDuration)
+                {
+                    Debug.Log("invincibility over");
+                    ChangeState(BabyState.Neutral);
+                }
+                break;
             case BabyState.Neutral:
                 _rabidTimer += Time.deltaTime;
 
@@ -129,7 +140,7 @@ public class BabyBehavior : MonoBehaviour
                     if (baby._currentState == BabyState.NeedMet) continue;
 
                     float distance = Vector3.Distance(transform.position, baby.transform.position);
-                    if (distance < _fightRadius + _fightMargin && distance < closestDistance)
+                    if (distance < _fightRadius + _fightMargin && distance < closestDistance && baby._currentState != BabyState.Invincible)
                     {
                         closestDistance = distance;
                         closestBaby = baby;
@@ -151,7 +162,7 @@ public class BabyBehavior : MonoBehaviour
 
                 if (_needMetTimer >= _needMetDuration)
                 {
-                    ChangeState(BabyState.Neutral);
+                    ChangeState(BabyState.Invincible);
                 }
 
                 break;
@@ -189,7 +200,7 @@ public class BabyBehavior : MonoBehaviour
             }
 
             alpha += alphaPerSecond * Time.deltaTime * (reverse ? -1 : 1);
-            material.color = new Color(material.color.r, material.color.g, material.color.b, alpha);
+            material.color = new Color(material.color.r, material.color.g, material.color.b, Mathf.Clamp01( alpha));
 
             yield return null;
         }
@@ -205,6 +216,9 @@ public class BabyBehavior : MonoBehaviour
         //exit from state stuff
         switch (_currentState)
         {
+            case BabyState.Invincible:
+                _invincibilityTimer = 0f;
+                break;
             case BabyState.Neutral:
                 break;
             case BabyState.RabidWarning:
@@ -237,6 +251,9 @@ public class BabyBehavior : MonoBehaviour
         //go to state stuff
         switch (newState)
         {
+            case BabyState.Invincible:
+                _invincibilityTimer = 0f;
+                break;
             case BabyState.Neutral:
                 Debug.Log("changed to neutral!");
                 break;
