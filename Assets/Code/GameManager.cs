@@ -1,9 +1,7 @@
 using System.Collections;
 using Code;
 using TMPro;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.UI;
 
 public enum GameState
 {
