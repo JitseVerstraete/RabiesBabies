@@ -1,6 +1,7 @@
 using System.Collections;
 using Code;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -205,8 +206,16 @@ public class GameManager: MonoBehaviour
         while (t<2)
         {
             t += Time.deltaTime;
-            Camera.main.transform.position = Vector3.Lerp(_intro.transform.GetChild(1).position, _origCamPosition, t/2);
-            Camera.main.transform.rotation = Quaternion.Slerp(_intro.transform.GetChild(1).rotation, _origCamRotation, t/2);
+            if (t <= 1)
+            {
+                Camera.main.transform.position = Vector3.Lerp(_intro.transform.GetChild(1).position, _intro.transform.GetChild(3).position, t);
+                Camera.main.transform.rotation = Quaternion.Slerp(_intro.transform.GetChild(1).rotation, _intro.transform.GetChild(3).rotation, t);               
+            }
+            else
+            {
+                Camera.main.transform.position = Vector3.Lerp(_intro.transform.GetChild(3).position, _origCamPosition, t-1);
+                Camera.main.transform.rotation = Quaternion.Slerp(_intro.transform.GetChild(3).rotation, _origCamRotation, t-1);
+            }
             yield return null;
         }
         
