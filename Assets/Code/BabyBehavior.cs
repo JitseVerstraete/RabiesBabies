@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Code;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -382,6 +383,8 @@ public class BabyBehavior : MonoBehaviour
             _linkedFightCloud = spawnedCloud;
             Debug.Log("spawning new fight cloud!");
         }
+        
+        FindFirstObjectByType<SecurityScreens>().RemoveBaby(this);
     }
 
     private bool IsInLayerMask(GameObject obj, LayerMask layerMask)

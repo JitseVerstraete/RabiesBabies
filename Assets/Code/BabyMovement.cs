@@ -16,9 +16,9 @@ public class BabyMovement : MonoBehaviour
 	[SerializeField] private float _speed = 3f;
 	[SerializeField] private float _rotationSpeed = 250f;
 	[SerializeField] private float _wallCheckDist = 3f;
-	
+	[SerializeField] private LineRenderer _pathLineRenderer;
+
 	private List<Vector3> _linePoints = new List<Vector3>();
-	private LineRenderer _lineRenderer;
 	private bool _drawing = false;
 	private float _lastPointTime;
 	private int _pathIndex;
@@ -29,7 +29,6 @@ public class BabyMovement : MonoBehaviour
 	
 	private void Awake()
 	{
-		_lineRenderer = GetComponent<LineRenderer>();
 		ChangeState(MovementState.FREE);
 	}
 
@@ -80,7 +79,7 @@ public class BabyMovement : MonoBehaviour
 		// cleanup
 		if (_state == MovementState.PATH)
 		{
-			_lineRenderer.positionCount = 0;
+			_pathLineRenderer.positionCount = 0;
 		}
 		
 		if (newState == MovementState.PATH)
@@ -120,8 +119,8 @@ public class BabyMovement : MonoBehaviour
 		
 		point += Vector3.up * .05f;
 		_linePoints.Add(point);
-		_lineRenderer.positionCount = _linePoints.Count;
-		_lineRenderer.SetPositions(_linePoints.ToArray());
+		_pathLineRenderer.positionCount = _linePoints.Count;
+		_pathLineRenderer.SetPositions(_linePoints.ToArray());
 		
 		_lastPointTime = Time.time;
 	}
@@ -163,13 +162,13 @@ public class BabyMovement : MonoBehaviour
 		List<Vector3> points = new List<Vector3>(_linePoints);
 		points.RemoveRange(0, _pathIndex);
 		points.Reverse();
-		_lineRenderer.positionCount = points.Count;
-		_lineRenderer.SetPositions(points.ToArray());
+		_pathLineRenderer.positionCount = points.Count;
+		_pathLineRenderer.SetPositions(points.ToArray());
 		
 		// float totalLength = points.Zip(points.Skip(1), (first, second) => Vector3.Distance(first, second)).Sum();
 		// _lineRenderer.material.mainTextureScale = totalLength * Vector3.right;
 		
-		_lineRenderer.material.mainTextureOffset += Vector2.one * Time.deltaTime;
+		_pathLineRenderer.material.mainTextureOffset += Vector2.one * Time.deltaTime;
 	}
 
 	private void MoveFreely()

@@ -31,18 +31,18 @@ namespace Code
 			{
 				yield return new WaitForSeconds(2);
 
-				if (_shownBabies.Count() > 5)
+				BabyBehavior[] babies = FindObjectsByType<BabyBehavior>(FindObjectsSortMode.None);
+				if (babies.Count() > 5)
 				{
 					// switch a screen
 					// find one not shown
-					BabyBehavior[] babies = FindObjectsByType<BabyBehavior>(FindObjectsSortMode.None);
 					List<BabyBehavior> notShownBabies = babies.ToList().Except(_shownBabies).ToList();
 					BabyBehavior toShowBaby = notShownBabies[Random.Range(0, notShownBabies.Count - 1)];
 					int toHideBabyIndex = Random.Range(0, _shownBabies.Count - 1);
 					BabyBehavior toHideBaby = _shownBabies[toHideBabyIndex];
 
 					_screens[toHideBabyIndex].texture = _staticTexture;
-					yield return new WaitForSeconds(0.1f);
+					yield return new WaitForSeconds(0.25f);
 					_screens[toHideBabyIndex].texture = toShowBaby.RenderTexture;
 					_shownBabies[toHideBabyIndex] = toShowBaby;
 				}
@@ -61,6 +61,13 @@ namespace Code
 				
 				_shownBabies.Add(babyBehavior);
 			}
+		}
+
+		public void RemoveBaby(BabyBehavior babyBehavior)
+		{
+			int index = _shownBabies.IndexOf(babyBehavior);
+			_screens[index].texture = _staticTexture;
+			_shownBabies.Remove(babyBehavior);
 		}
 	}
 }
