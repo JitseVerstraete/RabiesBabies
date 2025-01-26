@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class NeedStation : MonoBehaviour
@@ -65,9 +66,11 @@ public class NeedStation : MonoBehaviour
     {
         if (hasRoom)
         {
-            _heldBabies[firstFreeSlot] = baby;
-            baby.transform.position = _babyHoldPoints[firstFreeSlot].position;
-            baby.transform.rotation = _babyHoldPoints[firstFreeSlot].rotation;
+            int slot = firstFreeSlot;
+            Transform targetTransform = _babyHoldPoints[slot];
+            _heldBabies[slot] = baby;
+            baby.transform.position = targetTransform.position;
+            baby.transform.rotation = targetTransform.rotation;
         }
     }
 
@@ -80,7 +83,7 @@ public class NeedStation : MonoBehaviour
             baby.transform.rotation = babyDropPoint.rotation;
             
             Physics.Raycast(transform.position + new Vector3(0f, 100f, 0f), Vector3.down, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Floor"));
-            transform.position = hit.point;
+            baby.transform.position = hit.point;
         }
     }       
 }
