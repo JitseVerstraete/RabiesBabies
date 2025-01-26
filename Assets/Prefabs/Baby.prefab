@@ -303,8 +303,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.498, z: 0.31}
-  m_LocalScale: {x: 1.1437281, y: 1.1437281, z: 1.1437281}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 8333601546121554617}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1057,11 +1057,11 @@ MonoBehaviour:
   - {fileID: 106964053154866512}
   - {fileID: 2307979260532927660}
   _animator: {fileID: 6473638118166592547}
+  _skinNormalColor: {r: 0.9019608, g: 0.70980394, b: 0.7058824, a: 1}
+  _skinRabidColor: {r: 0.9019608, g: 0.41568628, b: 0.40392157, a: 1}
   _hungerColor: {r: 0.9, g: 0.8751152, b: 0.8460829, a: 1}
   _boredColor: {r: 0.84415686, g: 0.87929755, b: 0.8980392, a: 1}
   _diaperColor: {r: 0.88093215, g: 0.8466101, b: 0.9, a: 1}
-  _skinNormalColor: {r: 0.9019608, g: 0.70980394, b: 0.7058824, a: 1}
-  _skinRabidColor: {r: 0.9019608, g: 0.41568628, b: 0.40392157, a: 1}
   _fightRunSpeed: 6
 --- !u!114 &2928653592997361897
 MonoBehaviour:
@@ -2079,15 +2079,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -241416739695334566, guid: 54efa7b2a3b4d446981911b0f230c6be, type: 3}
     - target: {fileID: -2600172534127671891, guid: e5fdc168e621f498cb49a13e17327f62, type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 89ca35d620d514db489a92da13d0f15c, type: 2}
     - target: {fileID: -2600172534127671891, guid: e5fdc168e621f498cb49a13e17327f62, type: 3}
-      propertyPath: m_Materials.Array.data[1]
+      propertyPath: 'm_Materials.Array.data[1]'
       value: 
       objectReference: {fileID: 2100000, guid: 13685e01ae71344168f3d1bc17af918a, type: 2}
     - target: {fileID: -2600172534127671891, guid: e5fdc168e621f498cb49a13e17327f62, type: 3}
-      propertyPath: m_Materials.Array.data[3]
+      propertyPath: 'm_Materials.Array.data[3]'
       value: 
       objectReference: {fileID: 2100000, guid: bfd11a29b3a98459da3c7e4010268c49, type: 2}
     - target: {fileID: -2084811680363313996, guid: e5fdc168e621f498cb49a13e17327f62, type: 3}
