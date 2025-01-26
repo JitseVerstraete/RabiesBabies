@@ -59,9 +59,14 @@ public class GameManager: MonoBehaviour
     
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && _currentState == GameState.Playing)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            ChangeState(GameState.PauseMenu);
+            if (_currentState == GameState.Playing)
+                ChangeState(GameState.PauseMenu);
+            else if (_currentState == GameState.PauseMenu)
+            {
+                UnPauseGame();
+            }
         }
         
         switch (_currentState)
@@ -115,6 +120,7 @@ public class GameManager: MonoBehaviour
             case GameState.MainMenu:
                 Debug.Log("Main Menu");
                 gameTime = 0f;
+                Time.timeScale = 1f;
                 SoundManager.Instance.ResetSpeed("backgroundMusic");
                 SoundManager.Instance.StopAllSounds();
                 SoundManager.Instance.PlaySound("backgroundMusic");
@@ -151,6 +157,14 @@ public class GameManager: MonoBehaviour
                 break;
         }
         _currentState = newState;
+    }
+
+    public void UnPauseGame()
+    {
+        _currentState = GameState.Playing;
+        babySpawner.SetCanSpawn(true);
+        pauseMenu.SetActive(false);
+        SoundManager.Instance.ResumeSound("backgroundMusic");
     }
 
     private IEnumerator SickIntroAnimation()
