@@ -47,6 +47,8 @@ public class BabyBehavior : MonoBehaviour
     [SerializeField] private SkinnedMeshRenderer _skinnedRenderer;
     [SerializeField] private List<GameObject> _foamParticles;
     [SerializeField] private Animator _animator;
+    [SerializeField] private Color _skinNormalColor = new Color(230/255f, 181/255f, 180/255f);
+    [SerializeField] private Color _skinRabidColor = new Color(230/255f, 106/255f, 103/255f);
     
     [SerializeField] private Color _hungerColor;
     [SerializeField] private Color _boredColor;
@@ -310,7 +312,6 @@ public class BabyBehavior : MonoBehaviour
                 break;
             case BabyState.Fighting:
                 SoundManager.Instance.PlaySound("fight");
-                _needIconParent.SetActive(false);
                 break;
         }
 
@@ -325,15 +326,12 @@ public class BabyBehavior : MonoBehaviour
         {
             case BabyNeed.Hungry:
                 _needIconRef.sprite = _hungerIcon;
-                _needIconBackground.color = _hungerColor;
                 break;
             case BabyNeed.Bored:
                 _needIconRef.sprite = _boredIcon;
-                _needIconBackground.color = _boredColor;
                 break;
             case BabyNeed.Diaper:
                 _needIconRef.sprite = _diaperIcon;
-                _needIconBackground.color = _diaperColor;
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
