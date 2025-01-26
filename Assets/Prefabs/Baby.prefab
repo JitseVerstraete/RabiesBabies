@@ -1042,6 +1042,7 @@ MonoBehaviour:
   _dangerRadiusCollider: {fileID: 7826892906896458439}
   _needIconParent: {fileID: 4636462438616575715}
   _needIconRef: {fileID: 1862415536633998604}
+  _needIconBackground: {fileID: 8506251460120834911}
   _stationImageParent: {fileID: 2758320744970074150}
   _stationFillImage: {fileID: 2370191779474487045}
   _hungerIcon: {fileID: 21300000, guid: 4fabb426f88ad43bc8131725f79abbaf, type: 3}
@@ -1055,6 +1056,9 @@ MonoBehaviour:
   - {fileID: 5777377965761623320}
   - {fileID: 106964053154866512}
   _animator: {fileID: 6473638118166592547}
+  _hungerColor: {r: 0.9, g: 0.8751152, b: 0.8460829, a: 1}
+  _boredColor: {r: 0.84415686, g: 0.87929755, b: 0.8980392, a: 1}
+  _diaperColor: {r: 0.88093215, g: 0.8466101, b: 0.9, a: 1}
   _fightRunSpeed: 6
 --- !u!114 &2928653592997361897
 MonoBehaviour:

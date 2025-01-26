@@ -37,6 +37,7 @@ public class BabyBehavior : MonoBehaviour
 
     [SerializeField] private GameObject _needIconParent;
     [SerializeField] private Image _needIconRef;
+    [SerializeField] private Image _needIconBackground;
     [SerializeField] private GameObject _stationImageParent;
     [SerializeField] private Image _stationFillImage;
     [SerializeField] private Sprite _hungerIcon;
@@ -46,6 +47,10 @@ public class BabyBehavior : MonoBehaviour
     [SerializeField] private SkinnedMeshRenderer _skinnedRenderer;
     [SerializeField] private List<GameObject> _foamParticles;
     [SerializeField] private Animator _animator;
+    
+    [SerializeField] private Color _hungerColor;
+    [SerializeField] private Color _boredColor;
+    [SerializeField] private Color _diaperColor;
 
     private BabyState _currentState;
     private BabyNeed _currentNeed;
@@ -320,12 +325,15 @@ public class BabyBehavior : MonoBehaviour
         {
             case BabyNeed.Hungry:
                 _needIconRef.sprite = _hungerIcon;
+                _needIconBackground.color = _hungerColor;
                 break;
             case BabyNeed.Bored:
                 _needIconRef.sprite = _boredIcon;
+                _needIconBackground.color = _boredColor;
                 break;
             case BabyNeed.Diaper:
                 _needIconRef.sprite = _diaperIcon;
+                _needIconBackground.color = _diaperColor;
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
