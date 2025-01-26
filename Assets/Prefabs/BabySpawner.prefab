@@ -451,7 +451,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _animationDuration: 2
-  _animHeight: 5
+  _animHeight: 3
   _landingIconRoot: {fileID: 7224814211901333568}
   _landingIcon: {fileID: 2276508019867695002}
   _rotationSpeed: 30

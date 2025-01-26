@@ -119,9 +119,6 @@ public class BabySpawner : MonoBehaviour
         }
         SoundManager.Instance.StopSound("ambulance");
 
-        SoundManager.Instance.PlaySound("cannon_shot");
-
-
         yield return new WaitForSeconds(0.2f);
         //spawn and shoot the baby 
 
@@ -136,6 +133,7 @@ public class BabySpawner : MonoBehaviour
         yield return new WaitForSeconds(0.4f);
         StartCoroutine(RollBackAmbulance());
         _launchParticles.Play();
+        SoundManager.Instance.PlaySound("cannon_shot");
         
         
         
