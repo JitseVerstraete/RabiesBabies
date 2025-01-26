@@ -78,6 +78,14 @@ public class BabyBehavior : MonoBehaviour
         
         _pathLineRenderer.material.color = color;
         _skinnedRenderer.materials[1].color = color;
+        
+        _stationImageParent.SetActive(false);
+        _needIconParent.SetActive(false);
+        
+        _movement.ChangeState(BabyMovement.MovementState.NONE);
+        
+        _dangerRadiusLine.gameObject.SetActive(false);
+
     }
     
     public void Init()
@@ -93,9 +101,7 @@ public class BabyBehavior : MonoBehaviour
 
         InitializeDangerCircle();
         _dangerRadiusLine.gameObject.SetActive(false);
-
-
-
+        
         // GameObject faceCamView = Instantiate(_faceCamPrefab, FindFirstObjectByType<VerticalLayoutGroup>().transform);
         // RawImage rawImage = faceCamView.GetComponentInChildren<RawImage>(); 
         _renderTexture = new RenderTexture(256, 256, 24);

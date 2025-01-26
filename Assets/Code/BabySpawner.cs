@@ -102,6 +102,7 @@ public class BabySpawner : MonoBehaviour
 
         GameObject spawnedObject = Instantiate(_objectToSpawn, _launchOrigin.position, _launchOrigin.rotation);
         BabyBehavior behavior = spawnedObject.GetComponent<BabyBehavior>();
+        behavior.PreInit(colors[_babyCounter++ % colors.Count]);
 
         StartCoroutine(RollBackAmbulance());
         
@@ -117,7 +118,7 @@ public class BabySpawner : MonoBehaviour
 
         SoundManager.Instance.PlaySound("fall_ground");
         behavior = spawnedObject.GetComponent<BabyBehavior>();
-        behavior.Init(colors[_babyCounter++ % colors.Count]);
+        behavior.Init();
         _spawnedBabys.Add(behavior);
         yield return new WaitForSeconds(0.5f);
         
@@ -131,7 +132,8 @@ public class BabySpawner : MonoBehaviour
     {
         GameObject spawnedObject = Instantiate(_objectToSpawn, spawnPoint.position, spawnPoint.rotation);
         BabyBehavior behavior = spawnedObject.GetComponent<BabyBehavior>();
-        behavior.Init(colors[_babyCounter++ % colors.Count]);
+        behavior.PreInit(colors[_babyCounter++ % colors.Count]);
+        behavior.Init();
         _spawnedBabys.Add(behavior);
 
         FindFirstObjectByType<SecurityScreens>().AddBaby(behavior);
