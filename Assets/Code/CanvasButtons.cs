@@ -8,7 +8,13 @@ public class CanvasButtons : MonoBehaviour
     
     public void StartGameButton()
     {
-        GameManager.Instance.ChangeState(GameState.Playing);
+        if (GameManager.Instance.playedTutorial)
+            GameManager.Instance.ChangeState(GameState.Playing);
+        else
+        {
+            GameManager.Instance.ChangeState(GameState.Tutorial);
+            GameManager.Instance.playedTutorial = true;            
+        }
     }
 
     public void ResumeGameButton()

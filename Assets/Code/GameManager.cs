@@ -9,6 +9,7 @@ public enum GameState
     Start,
     MainMenu,
     PauseMenu,
+    Tutorial,
     Playing,
     Ending,
     EndGame
@@ -31,7 +32,9 @@ public class GameManager: MonoBehaviour
     public GameObject gameOverMenu;
     public GameObject timerUI;
     public GameObject faceCamsUI;
+    public GameObject tutorialUI;
 
+    public bool playedTutorial { get; set; }
     private bool _gameEndConditionReached = false;
     private Vector3 _origCamPosition;
     private Quaternion _origCamRotation;
@@ -42,6 +45,8 @@ public class GameManager: MonoBehaviour
 
     public void Start()
     {
+        playedTutorial = false;
+        
         // Singleton setup
         if (Instance == null)
         {
@@ -112,6 +117,7 @@ public class GameManager: MonoBehaviour
         faceCamsUI.SetActive(newState == GameState.Playing);
         pauseMenu.SetActive(newState == GameState.PauseMenu);
         gameOverMenu.SetActive(newState == GameState.EndGame);
+        tutorialUI.SetActive(newState == GameState.Tutorial);
         
         SoundManager.Instance.ResumeSound("backgroundMusic");
         
@@ -140,6 +146,9 @@ public class GameManager: MonoBehaviour
                 Debug.Log("Pause Menu");
                 babySpawner.SetCanSpawn(false);
                 SoundManager.Instance.PauseSound("backgroundMusic");
+                break;
+            case GameState.Tutorial:
+                Debug.Log("Tutorial");
                 break;
             case GameState.Playing:
                 Debug.Log("Playing Game");

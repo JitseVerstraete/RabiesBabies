@@ -20,7 +20,7 @@ MonoBehaviour:
     m_PointSize: 69
     m_Scale: 1
     m_UnitsPerEM: 2048
-    m_LineHeight: 84.06006
+    m_LineHeight: 55
     m_AscentLine: 67.0459
     m_CapLine: 50
     m_MeanLine: 50
@@ -34,7 +34,7 @@ MonoBehaviour:
     m_UnderlineThickness: 5.053711
     m_StrikethroughOffset: 20
     m_StrikethroughThickness: 5.053711
-    m_TabWidth: 17
+    m_TabWidth: 20.5
   m_Material: {fileID: 4008863423740808362}
   m_SourceFontFileGUID: 246048c097f51d44e820b248d20d130d
   m_CreationSettings:
