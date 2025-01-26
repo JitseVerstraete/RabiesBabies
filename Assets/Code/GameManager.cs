@@ -184,7 +184,7 @@ public class GameManager: MonoBehaviour
         
         // spawn fix first baby
         babySpawner.SetCanSpawn(true);
-        babySpawner.Spawn(_intro.transform.GetChild(2));
+        babySpawner.SpawnDirect(_intro.transform.GetChild(2));
     }
     
     private IEnumerator SickOutroAnimation(string result)

@@ -29,7 +29,7 @@ public class BabyMovement : MonoBehaviour
 	
 	private void Awake()
 	{
-		ChangeState(MovementState.FREE);
+		ChangeState(MovementState.NONE);
 	}
 
 	private void Update()

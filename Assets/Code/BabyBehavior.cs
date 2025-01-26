@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public enum BabyState
 {
+    SpawnAnim,
     Invincible,
     Neutral,
     RabidWarning,
@@ -67,16 +68,24 @@ public class BabyBehavior : MonoBehaviour
     private void Awake()
     {
         _movement = GetComponent<BabyMovement>();
+        _currentState = BabyState.SpawnAnim;
     }
 
-    public void Init(Color color)
+
+    public void PreInit(Color color)
+    {
+        _stationFillImage.color = color;
+        
+        _pathLineRenderer.material.color = color;
+        _skinnedRenderer.materials[1].color = color;
+    }
+    
+    public void Init()
     {
         ChangeState(BabyState.Neutral);
         SetNeed(GetRandomNeed());
         _rabidTimer = 0f;
-
-        _stationFillImage.color = color;
-
+        
         Debug.Log("Baby need " + _currentNeed.ToString());
 
         Physics.Raycast(transform.position + new Vector3(0f, 100f, 0f), Vector3.down, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Floor"));
@@ -85,8 +94,7 @@ public class BabyBehavior : MonoBehaviour
         InitializeDangerCircle();
         _dangerRadiusLine.gameObject.SetActive(false);
 
-        _pathLineRenderer.material.color = color;
-        _skinnedRenderer.materials[1].color = color;
+
 
         // GameObject faceCamView = Instantiate(_faceCamPrefab, FindFirstObjectByType<VerticalLayoutGroup>().transform);
         // RawImage rawImage = faceCamView.GetComponentInChildren<RawImage>(); 
@@ -96,12 +104,15 @@ public class BabyBehavior : MonoBehaviour
 
         _needIconParent.SetActive(true);
         _stationImageParent.SetActive(false);
+        _movement.ChangeState(BabyMovement.MovementState.FREE);
     }
 
     private void Update()
     {
         switch (_currentState)
         {
+            case BabyState.SpawnAnim:
+                break;
             case BabyState.Invincible:
                 _invincibilityTimer += Time.deltaTime;
                 if (_invincibilityTimer >= _invincibilityDuration)
@@ -109,6 +120,7 @@ public class BabyBehavior : MonoBehaviour
                     Debug.Log("invincibility over");
                     ChangeState(BabyState.Neutral);
                 }
+
                 break;
             case BabyState.Neutral:
                 _rabidTimer += Time.deltaTime;
@@ -200,7 +212,7 @@ public class BabyBehavior : MonoBehaviour
             }
 
             alpha += alphaPerSecond * Time.deltaTime * (reverse ? -1 : 1);
-            material.color = new Color(material.color.r, material.color.g, material.color.b, Mathf.Clamp01( alpha));
+            material.color = new Color(material.color.r, material.color.g, material.color.b, Mathf.Clamp01(alpha));
 
             yield return null;
         }
@@ -216,6 +228,10 @@ public class BabyBehavior : MonoBehaviour
         //exit from state stuff
         switch (_currentState)
         {
+            case BabyState.SpawnAnim:
+                _movement.ChangeState(BabyMovement.MovementState.FREE);
+                _animator.SetTrigger("crawl");
+                break;
             case BabyState.Invincible:
                 _invincibilityTimer = 0f;
                 break;
@@ -251,6 +267,9 @@ public class BabyBehavior : MonoBehaviour
         //go to state stuff
         switch (newState)
         {
+            case BabyState.SpawnAnim:
+                _movement.ChangeState(BabyMovement.MovementState.NONE);
+                break;
             case BabyState.Invincible:
                 _invincibilityTimer = 0f;
                 break;
@@ -284,6 +303,7 @@ public class BabyBehavior : MonoBehaviour
         }
 
         _currentState = newState;
+        Debug.Log(newState.ToString());
     }
 
     private void SetNeed(BabyNeed need)
@@ -400,7 +420,7 @@ public class BabyBehavior : MonoBehaviour
             _linkedFightCloud = spawnedCloud;
             Debug.Log("spawning new fight cloud!");
         }
-        
+
         FindFirstObjectByType<SecurityScreens>().RemoveBaby(this);
     }
 

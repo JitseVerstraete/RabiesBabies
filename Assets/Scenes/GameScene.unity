@@ -580,6 +580,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1247120849694610033, guid: ac899326b48c34bef884d228e15d3685, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 6055451703256728989, guid: ac899326b48c34bef884d228e15d3685, type: 3}
       propertyPath: m_Icon
       value: 
@@ -1366,6 +1370,14 @@ PrefabInstance:
     - target: {fileID: 2664965969097162756, guid: e2406fd53f58cfb488950838956dce27, type: 3}
       propertyPath: m_Name
       value: SoundManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 4192595065866276326, guid: e2406fd53f58cfb488950838956dce27, type: 3}
+      propertyPath: sounds.Array.data[2].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 25144acfb0a174c98877ded0e961abf0, type: 3}
+    - target: {fileID: 4192595065866276326, guid: e2406fd53f58cfb488950838956dce27, type: 3}
+      propertyPath: sounds.Array.data[2].volume
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

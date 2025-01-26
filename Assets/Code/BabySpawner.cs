@@ -8,17 +8,28 @@ public class BabySpawner : MonoBehaviour
 {
     private static BabySpawner _instance;
     public static BabySpawner instance => _instance;
-    
+
     [Header("Spawn Settings")] [SerializeField]
     private GameObject _objectToSpawn;
 
+    [SerializeField] private GameObject _ambulance;
+    [SerializeField] private Transform _ambulanceHiddenPos;
+    [SerializeField] private Transform _ambulanceShownPos;
     [SerializeField] private Transform _launchOrigin;
+    [SerializeField] private ParticleSystem _launchParticles;
     [SerializeField] private List<Transform> spawnPoints;
     [SerializeField] private Transform startSpawnPoint;
     [SerializeField] private float spawnInterval = 2.0f;
     [SerializeField] private int maxObjects = 10;
     [SerializeField] private List<Color> colors;
-    
+    [SerializeField] private AnimationCurve _verticalCurve;
+    [SerializeField] private AnimationCurve _horizontalCurve;
+    [SerializeField] private float _animationDuration = 3f;
+    [SerializeField] private float _animHeight = 15f;
+
+    private float _ambulanceMoveDuration = 1.5f;
+
+
     private bool _canSpawn = false;
 
     private List<BabyBehavior> _spawnedBabys = new List<BabyBehavior>();
@@ -35,8 +46,8 @@ public class BabySpawner : MonoBehaviour
         {
             Destroy(this);
         }
-        
-        
+
+
         if (spawnPoints.Count > 0 && _objectToSpawn != null)
         {
             StartCoroutine(SpawnObjects());
@@ -45,6 +56,8 @@ public class BabySpawner : MonoBehaviour
         {
             Debug.LogError("Object to spawn or spawn points are not set!");
         }
+
+        _ambulance.transform.position = _ambulanceHiddenPos.position;
     }
 
     public void SetCanSpawn(bool canSpawn)
@@ -68,15 +81,53 @@ public class BabySpawner : MonoBehaviour
 
     private IEnumerator SpawnAtRandomPoint()
     {
-        int randomIndex = Random.Range(0, spawnPoints.Count);
-        Transform spawnPoint = spawnPoints[randomIndex];
+        //roll up ambulance
+        float ambulanceMoveTimer = 0f;
+        while (ambulanceMoveTimer < _ambulanceMoveDuration)
+        {
+            ambulanceMoveTimer += Time.deltaTime;
 
-        Spawn(spawnPoint);
+            _ambulance.transform.position = Vector3.Lerp(_ambulanceHiddenPos.position, _ambulanceShownPos.position, ambulanceMoveTimer / _ambulanceMoveDuration);
+            yield return null;
+        }
+
+
+        SoundManager.Instance.PlaySound("cannon_shot");
+        _launchParticles.Play();
+
+        yield return new WaitForSeconds(0.2f);
+        //spawn and shoot the baby 
+        int randomIndex = Random.Range(0, spawnPoints.Count);
+        Vector3 targetPoint = spawnPoints[randomIndex].position;
+
+        GameObject spawnedObject = Instantiate(_objectToSpawn, _launchOrigin.position, _launchOrigin.rotation);
+        BabyBehavior behavior = spawnedObject.GetComponent<BabyBehavior>();
+
+        StartCoroutine(RollBackAmbulance());
         
+        float animTimer = 0f;
+        while (animTimer < _animationDuration)
+        {
+            animTimer += Time.deltaTime;
+            float vertical = _animHeight * Mathf.Lerp(_launchOrigin.position.y, targetPoint.y, animTimer / _animationDuration);
+            Vector3 mainMovement = Vector3.Lerp(_launchOrigin.position, targetPoint, _horizontalCurve.Evaluate(animTimer / _animationDuration));
+            spawnedObject.transform.position = mainMovement + new Vector3(0f, vertical, 0f);
+            yield return null;
+        }
+
+        SoundManager.Instance.PlaySound("fall_ground");
+        behavior = spawnedObject.GetComponent<BabyBehavior>();
+        behavior.Init(colors[_babyCounter++ % colors.Count]);
+        _spawnedBabys.Add(behavior);
+        yield return new WaitForSeconds(0.5f);
+        
+        //acutally Initialize it and put it functionally in the level
+
+        FindFirstObjectByType<SecurityScreens>().AddBaby(behavior);
         yield return null;
     }
 
-    public void Spawn(Transform spawnPoint)
+    public void SpawnDirect(Transform spawnPoint)
     {
         GameObject spawnedObject = Instantiate(_objectToSpawn, spawnPoint.position, spawnPoint.rotation);
         BabyBehavior behavior = spawnedObject.GetComponent<BabyBehavior>();
@@ -84,6 +135,22 @@ public class BabySpawner : MonoBehaviour
         _spawnedBabys.Add(behavior);
 
         FindFirstObjectByType<SecurityScreens>().AddBaby(behavior);
+    }
+    
+
+    private IEnumerator RollBackAmbulance()
+    {
+        yield return new WaitForSeconds(0.3f);
+        
+        //roll back ambulance
+        float ambulanceMoveTimer = 0f;
+        while (ambulanceMoveTimer < _ambulanceMoveDuration)
+        {
+            ambulanceMoveTimer += Time.deltaTime;
+
+            _ambulance.transform.position = Vector3.Lerp(_ambulanceShownPos.position, _ambulanceHiddenPos.position, ambulanceMoveTimer / _ambulanceMoveDuration);
+            yield return null;
+        }
     }
 
     public void ResetSpawner()
