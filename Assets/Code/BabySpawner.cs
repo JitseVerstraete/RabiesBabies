@@ -56,18 +56,16 @@ public class BabySpawner : MonoBehaviour
             Destroy(this);
         }
 
+        _ambulance.transform.position = _ambulanceHiddenPos.position;
+        _landingIconRoot.SetActive(false);
+    }
 
+    public void KickStartSpawner()
+    {
         if (spawnPoints.Count > 0 && _objectToSpawn != null)
         {
             StartCoroutine(SpawnObjects());
         }
-        else
-        {
-            Debug.LogError("Object to spawn or spawn points are not set!");
-        }
-
-        _ambulance.transform.position = _ambulanceHiddenPos.position;
-        _landingIconRoot.SetActive(false);
     }
 
     public void SetCanSpawn(bool canSpawn)

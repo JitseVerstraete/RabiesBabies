@@ -314,6 +314,7 @@ public class BabyBehavior : MonoBehaviour
                 break;
             case BabyState.Fighting:
                 SoundManager.Instance.PlaySound("fight");
+                _needIconParent.SetActive(false);
                 break;
         }
 
@@ -404,6 +405,7 @@ public class BabyBehavior : MonoBehaviour
         if (otherBaby._fightTarget == null)
         {
             otherBaby._fightTarget = this;
+            otherBaby.ChangeState(BabyState.Fighting);
         }
 
         float distanceToTarget = 0;
