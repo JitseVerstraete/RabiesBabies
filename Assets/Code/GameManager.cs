@@ -192,6 +192,7 @@ public class GameManager: MonoBehaviour
             t += Time.deltaTime;
             _intro.GetComponentInChildren<SkinnedMeshRenderer>().SetBlendShapeWeight(0, t * 100);
             _intro.GetComponentInChildren<SkinnedMeshRenderer>().materials[3].SetColor("_Emission", Color.Lerp(Color.white, Color.red, t));
+            _intro.GetComponentInChildren<SkinnedMeshRenderer>().materials[0].color = Color.Lerp(Color.white, Color.red, t/2);
             yield return null;
         }
 
