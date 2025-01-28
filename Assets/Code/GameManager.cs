@@ -151,6 +151,7 @@ public class GameManager: MonoBehaviour
                 break;
             case GameState.Playing:
                 Debug.Log("Playing Game");
+                babySpawner.KickStartSpawner();
                 StartCoroutine(SickIntroAnimation());
                 break;
             case GameState.Ending:
