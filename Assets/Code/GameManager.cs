@@ -164,6 +164,7 @@ public class GameManager: MonoBehaviour
                 SoundManager.Instance.PlaySound("backgroundMusic");
                 var minutes = Mathf.FloorToInt(gameTime / 60);
                 var seconds = Mathf.FloorToInt(gameTime % 60);
+                StartCoroutine(FindFirstObjectByType<Leaderboard>().ShowLeaderboard((int) gameTime));
                 StartCoroutine(SickOutroAnimation($"You survived baby hell {minutes:00}:{seconds:00} without an accident!"));
                 break;
         }

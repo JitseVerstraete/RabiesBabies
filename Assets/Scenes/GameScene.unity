@@ -2353,10 +2353,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Outro
       objectReference: {fileID: 0}
-    - target: {fileID: 4510369310663764739, guid: 0804498bcb20e4bd681bd967e550ed4f, type: 3}
-      propertyPath: m_text
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 4605472509749251631, guid: 0804498bcb20e4bd681bd967e550ed4f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -17.064043

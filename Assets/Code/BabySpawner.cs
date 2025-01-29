@@ -162,7 +162,7 @@ public class BabySpawner : MonoBehaviour
         _landingIconRoot.transform.localScale = Vector3.zero;
 
 
-        FindFirstObjectByType<SecurityScreens>().AddBaby(behavior);
+        FindFirstObjectByType<SecurityScreens>()?.AddBaby(behavior);
         yield return null;
     }
 
